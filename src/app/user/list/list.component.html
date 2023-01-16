@@ -8,7 +8,7 @@
           <table class="table align-middle text-nowrap">
             <thead>
               <tr>
-                <th class="text-dark font-medium fs-4">Name</th>
+                <th class="text-dark font-medium fs-4">User</th>
                 <th class="text-dark font-medium fs-4">Email</th>
                 <th class="text-dark font-medium fs-4">Phone</th>
                 <th class="text-dark font-medium fs-4">Username</th>
@@ -16,7 +16,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let ts of topSelling">
+              <tr
+                *ngFor="let ts of topSelling"
+                class="clickable-row"
+                (click)="onClick($event, ts)"
+              >
                 <td>
                   <div class="d-flex align-items-center">
                     <img
@@ -33,11 +37,7 @@
                 </td>
                 <td class="fs-4">{{ ts.productName }}</td>
                 <td>
-                  <span
-                    class="p-2 bg-{{
-                      ts.status
-                    }} rounded-circle d-inline-block ms-3"
-                  ></span>
+                  <span>+923352732318</span>
                 </td>
 
                 <td>

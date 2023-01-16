@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { Employee, TableRows, TopSelling, User } from "./user-data";
 
 @Component({
@@ -11,10 +12,15 @@ export class ListComponent implements OnInit {
 
   trow: TableRows[];
 
-  constructor() {
+  constructor(private router: Router) {
     this.topSelling = TopSelling;
 
     this.trow = Employee;
   }
   ngOnInit(): void {}
+
+  onClick($event: any, row: any) {
+    row.id = 1;
+    this.router.navigateByUrl(`/user/update?user_id=${row.id}`);
+  }
 }

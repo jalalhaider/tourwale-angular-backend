@@ -1,4 +1,4 @@
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="userForm" (ngSubmit)="handleSubmit()">
   <div class="card-body">
     <h2 class="">User Form</h2>
     <p>System user</p>
@@ -67,7 +67,7 @@
             ><sup>*</sup> Phone</label
           >
           <input
-            type="number"
+            type="string"
             class="form-control"
             placeholder="Enter Phone number"
             formControlName="phone"
