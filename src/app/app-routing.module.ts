@@ -7,25 +7,18 @@ import { LoginComponent } from "./login/login.component";
 
 export const Approutes: Routes = [
   {
-    path: "auth",
-    component: AuthComponent,
-    children: [
-      {
-        path: "login",
-        loadChildren: () =>
-          import("./login/login.module").then((m) => m.LoginModule),
-      },
-    ],
-  },
-  {
     path: "",
     component: FullComponent,
     children: [
-      { path: "", redirectTo: "/login", pathMatch: "full" },
       {
-        path: "register",
-        loadChildren: () =>
-          import("./register/register.module").then((m) => m.RegisterModule),
+        path: "user",
+        children: [
+          {
+            path: "",
+            loadChildren: () =>
+              import("./user/user.module").then((m) => m.UserModule),
+          },
+        ],
       },
       {
         path: "dashboard",
@@ -47,7 +40,18 @@ export const Approutes: Routes = [
     ],
   },
   {
+    path: "auth",
+    component: AuthComponent, //Layout component
+    children: [
+      {
+        path: "login",
+        loadChildren: () =>
+          import("./login/login.module").then((m) => m.LoginModule),
+      },
+    ],
+  },
+  {
     path: "**",
-    redirectTo: "/starter",
+    redirectTo: "/dashboard",
   },
 ];
