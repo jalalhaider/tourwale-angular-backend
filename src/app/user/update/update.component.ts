@@ -8,6 +8,7 @@ import { User } from "../models";
   styleUrls: ["./update.component.scss"],
 })
 export class UpdateComponent implements OnInit {
+  formType = "Update";
   userId: string;
   user: User = {};
   constructor(private route: ActivatedRoute) {

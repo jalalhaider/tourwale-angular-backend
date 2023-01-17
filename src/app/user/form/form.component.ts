@@ -10,6 +10,7 @@ import { User } from "../models";
 export class FormComponent implements OnInit {
   isLoading = false;
 
+  @Input() formType: string = "";
   @Input() data: User = {};
   @Output() onSubmit = new EventEmitter<User>();
 

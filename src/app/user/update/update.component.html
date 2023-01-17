@@ -2,6 +2,7 @@
   <div class="col-12">
     <div class="card">
       <app-user-form
+        [formType]="formType"
         [data]="user"
         (onSubmit)="onSubmit($event)"
       ></app-user-form>

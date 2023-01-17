@@ -4,23 +4,22 @@
       <div class="card-body">
         <h4 class="card-title">User Listing</h4>
         <h5 class="card-subtitle text-muted">Overview of the users</h5>
+        <a routerLink="/user/create" class="btn btn-info"
+          ><i class="bi bi-person-fill-add"></i> Create User</a
+        >
         <div class="table-responsive">
           <table class="table align-middle text-nowrap">
             <thead>
               <tr>
                 <th class="text-dark font-medium fs-4">User</th>
-                <th class="text-dark font-medium fs-4">Email</th>
-                <th class="text-dark font-medium fs-4">Phone</th>
                 <th class="text-dark font-medium fs-4">Username</th>
+                <th class="text-dark font-medium fs-4">Phone</th>
                 <th class="text-dark font-medium fs-4">Status</th>
+                <th class="text-dark font-medium fs-4">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr
-                *ngFor="let ts of topSelling"
-                class="clickable-row"
-                (click)="onClick($event, ts)"
-              >
+              <tr *ngFor="let ts of topSelling" class="clickable-row">
                 <td>
                   <div class="d-flex align-items-center">
                     <img
@@ -30,21 +29,34 @@
                       class="rounded-circle"
                     />
                     <div class="ms-3">
-                      <h5 class="mb-0 font-medium">{{ ts.uname }}</h5>
-                      <span class="text-muted">{{ ts.gmail }}</span>
+                      <h5 class="mb-0 font-medium">
+                        {{ ts.firstName }} {{ ts.lastName }}
+                      </h5>
+                      <span class="text-muted">{{ ts.email }}</span>
                     </div>
                   </div>
                 </td>
-                <td class="fs-4">{{ ts.productName }}</td>
+                <td class="fs-4">{{ ts.username }}</td>
                 <td>
                   <span>+923352732318</span>
                 </td>
-
                 <td>
-                  <h5 class="mb-0 fw-normal">{{ ts.weeks }}</h5>
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input cursor-pointer"
+                      type="checkbox"
+                      [checked]="ts.isActive"
+                    />
+                  </div>
                 </td>
                 <td>
-                  <h5 class="mb-0 fw-normal">{{ ts.budget }}</h5>
+                  <button class="btn btn-info">
+                    <i class="bi bi-trash3"> </i>
+                  </button>
+                  &nbsp;
+                  <button class="btn btn-info" (click)="onClick($event, ts)">
+                    <i class="bi bi-pencil-square"> </i>
+                  </button>
                 </td>
               </tr>
             </tbody>

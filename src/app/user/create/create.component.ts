@@ -5,6 +5,7 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./create.component.html",
 })
 export class CreateComponent implements OnInit {
+  formType = "Create";
   constructor() {}
 
   ngOnInit(): void {}

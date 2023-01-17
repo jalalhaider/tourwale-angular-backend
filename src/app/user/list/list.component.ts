@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { Employee, TableRows, TopSelling, User } from "./user-data";
+import { User } from "../models";
+import { Employee, TableRows, TopSelling } from "./user-data";
 
 @Component({
   selector: "app-list",

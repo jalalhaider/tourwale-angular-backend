@@ -1,12 +1,4 @@
-export interface User {
-  image: string;
-  uname: string;
-  gmail: string;
-  productName: string;
-  status: string;
-  weeks: number;
-  budget: string;
-}
+import { User } from "../models";
 
 export interface TableRows {
   fname: string;
@@ -17,39 +9,35 @@ export interface TableRows {
 export const TopSelling: User[] = [
   {
     image: "assets/images/users/user1.jpg",
-    uname: "Hanna Gover",
-    gmail: "hgover@gmail.com",
-    productName: "Flexy React",
-    status: "danger",
-    weeks: 35,
-    budget: "95K",
+    firstName: "Hanna Gover",
+    lastName: "hgover@gmail.com",
+    email: "hgover@gmail.com",
+    username: "Flexy React",
+    isActive: true,
   },
   {
     image: "assets/images/users/user2.jpg",
-    uname: "Hanna Gover",
-    gmail: "hgover@gmail.com",
-    productName: "Landing pro React",
-    status: "info",
-    weeks: 35,
-    budget: "95K",
+    firstName: "Hanna Gover",
+    lastName: "hgover@gmail.com",
+    email: "hgover@gmail.com",
+    username: "Flexy React",
+    isActive: true,
   },
   {
     image: "assets/images/users/user3.jpg",
-    uname: "Hanna Gover",
-    gmail: "hgover@gmail.com",
-    productName: "Elite React	",
-    status: "warning",
-    weeks: 35,
-    budget: "95K",
+    firstName: "Hanna Gover",
+    lastName: "hgover@gmail.com",
+    email: "hgover@gmail.com",
+    username: "Flexy React",
+    isActive: true,
   },
   {
     image: "assets/images/users/user4.jpg",
-    uname: "Hanna Gover",
-    gmail: "hgover@gmail.com",
-    productName: "Ample React",
-    status: "success",
-    weeks: 35,
-    budget: "95K",
+    firstName: "Hanna Gover",
+    lastName: "hgover@gmail.com",
+    email: "hgover@gmail.com",
+    username: "Flexy React",
+    isActive: true,
   },
 ];
 
