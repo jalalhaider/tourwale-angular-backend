@@ -21,6 +21,16 @@ export const Approutes: Routes = [
         ],
       },
       {
+        path: "agency",
+        children: [
+          {
+            path: "",
+            loadChildren: () =>
+              import("./agency/agency.module").then((m) => m.AgencyModule),
+          },
+        ],
+      },
+      {
         path: "dashboard",
         loadChildren: () =>
           import("./dashboard/dashboard.module").then((m) => m.DashboardModule),
