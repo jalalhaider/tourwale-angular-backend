@@ -5,7 +5,7 @@ import { UpdateComponent } from "./update/update.component";
 
 export const routes: Routes = [
   {
-    path: "",
+    path: "list",
     data: {
       title: "List Setting",
       urls: [{ title: "list", url: "/setting/list" }, { title: "List" }],

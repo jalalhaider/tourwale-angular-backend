@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Setting } from "../models";
 import { SettingService } from "../setting.service";
 
@@ -16,7 +16,8 @@ export class UpdateComponent implements OnInit {
 
   constructor(
     private settingSerivce: SettingService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -26,12 +27,10 @@ export class UpdateComponent implements OnInit {
   }
 
   getSetting() {
-    setTimeout(() => {
-      this.settingSerivce.get(this.setting_id).subscribe((res) => {
-        this.data = res;
-      });
-      this.isLoading = !this.isLoading;
-    }, 2000);
+    this.settingSerivce.get(this.setting_id).subscribe((res) => {
+      this.data = res;
+    });
+    this.isLoading = !this.isLoading;
   }
 
   onSubmit(dto: Setting) {
@@ -39,6 +38,7 @@ export class UpdateComponent implements OnInit {
     this.settingSerivce.update(this.setting_id, dto).subscribe((setting) => {
       console.log("Setting Updated on Server", setting);
       this.isLoading = !this.isLoading;
+      this.router.navigateByUrl(`/setting/list`);
     });
   }
 }

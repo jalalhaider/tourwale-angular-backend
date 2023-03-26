@@ -17,12 +17,9 @@ export class CreateComponent implements OnInit {
 
   onSubmit(dto: Setting) {
     this.isLoading = !this.isLoading;
-    setTimeout(() => {
-      this.settingService.create(dto).subscribe((setting) => {
-        console.log("Setting Created on Server", setting);
-        this.isLoading = !this.isLoading;
-        this.router.navigateByUrl(`/setting`);
-      });
-    }, 2000);
+    this.settingService.create(dto).subscribe((setting) => {
+      this.isLoading = !this.isLoading;
+      this.router.navigateByUrl(`/setting/list`);
+    });
   }
 }

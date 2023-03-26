@@ -26,7 +26,7 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
-    path: "/setting",
+    path: "/setting/list",
     title: "Setting",
     icon: "bi bi-wrench",
     class: "",
