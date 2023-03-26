@@ -7,13 +7,10 @@ import { Setting } from "./models";
 export class SettingService {
   constructor(private http: HttpClient) {}
 
-  get(): Observable<any> {
-    return this.http.get("http://localhost:4100/api/v1/setting/1").pipe(
-      catchError((err) => {
-        console.log("setting service - error", err);
-        return throwError(err);
-      })
-    );
+  get(id: number): Observable<Setting> {
+    return this.http
+      .get("http://localhost:4100/api/v1/setting/" + id)
+      .pipe(catchError(this.handleError));
   }
 
   getList(where: any): Observable<any> {
@@ -29,6 +26,13 @@ export class SettingService {
     const httpOption = {};
     return this.http
       .post("http://localhost:4100/api/v1/setting", dto, httpOption)
+      .pipe(catchError(this.handleError));
+  }
+
+  update(id: number, dto: Setting) {
+    const httpOption = {};
+    return this.http
+      .put("http://localhost:4100/api/v1/setting/" + id, dto, httpOption)
       .pipe(catchError(this.handleError));
   }
 

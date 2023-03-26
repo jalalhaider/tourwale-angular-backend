@@ -47,11 +47,10 @@
                   </div>
                 </td>
                 <td>
-                  <button class="btn btn-info">
-                    <i class="bi bi-trash3"> </i>
-                  </button>
-                  &nbsp;
-                  <button class="btn btn-info">
+                  <button
+                    class="btn btn-info"
+                    (click)="onClick($event, setting)"
+                  >
                     <i class="bi bi-pencil-square"> </i>
                   </button>
                 </td>

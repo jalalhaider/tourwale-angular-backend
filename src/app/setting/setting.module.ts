@@ -6,6 +6,7 @@ import { RouterModule } from "@angular/router";
 import { CreateComponent } from "./create/create.component";
 import { FormComponent } from "./form/form.component";
 import { ListComponent } from "./list/list.component";
+import { LoadingBarComponent } from "../shared/loading-bar/loading-bar.component";
 import { routes } from "./setting.routing";
 import { SettingService } from "./setting.service";
 import { UpdateComponent } from "./update/update.component";
@@ -23,6 +24,7 @@ import { UpdateComponent } from "./update/update.component";
     FormComponent,
     UpdateComponent,
     ListComponent,
+    LoadingBarComponent,
   ],
 })
 export class SettingModule {}

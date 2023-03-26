@@ -14,7 +14,7 @@ export class FormComponent implements OnInit {
   @Output() onSubmit = new EventEmitter<Setting>();
 
   form = this.fb.group({
-    id: [""],
+    settingId: [""],
     key: ["", Validators.required],
     value: ["", Validators.required],
     isSerialized: [false, Validators.required],
@@ -22,8 +22,11 @@ export class FormComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {}
 
-  ngOnInit(): void {
-    console.log("ngOnInit", this.data);
+  ngOnInit(): void {}
+  ngOnChanges() {
+    this.form.patchValue({
+      ...this.data,
+    });
   }
 
   handleSubmit(): void {

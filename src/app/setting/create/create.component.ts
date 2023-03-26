@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
+import { Router } from "@angular/router";
 import { Setting } from "../models";
 import { SettingService } from "../setting.service";
 
@@ -11,13 +12,17 @@ import { SettingService } from "../setting.service";
 export class CreateComponent implements OnInit {
   formType = "Create";
   isLoading = false;
-  constructor(private settingService: SettingService) {}
+  constructor(private settingService: SettingService, private router: Router) {}
   ngOnInit(): void {}
 
   onSubmit(dto: Setting) {
-    console.log("setting submit ", dto);
-    this.settingService.create(dto).subscribe((setting) => {
-      console.log("Setting Added", setting);
-    });
+    this.isLoading = !this.isLoading;
+    setTimeout(() => {
+      this.settingService.create(dto).subscribe((setting) => {
+        console.log("Setting Created on Server", setting);
+        this.isLoading = !this.isLoading;
+        this.router.navigateByUrl(`/setting`);
+      });
+    }, 2000);
   }
 }
