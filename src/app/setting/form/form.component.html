@@ -7,7 +7,7 @@
       <div class="col-sm-12 col-md-6">
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label"
-            ><sup>*</sup> Key
+            ><sup style="color: red">*</sup> Key
           </label>
           <input
             type="text"
@@ -15,21 +15,31 @@
             placeholder="Enter Key"
             formControlName="key"
           />
+          <span
+            style="color: red"
+            *ngIf="!form.get('key')?.valid && form.get('key')?.touched"
+            >Key is required</span
+          >
         </div>
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label"
-            ><sup>*</sup> Value
+            ><sup style="color: red">*</sup> Value
           </label>
           <input
             type="text"
             class="form-control"
-            placeholder="Enter Key"
+            placeholder="Enter Value"
             formControlName="value"
           />
+          <span
+            style="color: red"
+            *ngIf="!form.get('value')?.valid && form.get('value')?.touched"
+            >Value is required</span
+          >
         </div>
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label"
-            ><sup>*</sup> Serialized
+            ><sup style="color: red">*</sup> Is Serialized
           </label>
           <div class="form-check form-switch">
             <input
@@ -45,7 +55,7 @@
 
     <div class="row">
       <div class="col-12 align-self-end">
-        <button class="btn btn-info" type="submit">
+        <button class="btn btn-info" type="submit" [disabled]="!form.valid">
           <i class="bi bi-save"></i>
           <span> Save</span>
         </button>

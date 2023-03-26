@@ -20,26 +20,7 @@ export const Approutes: Routes = [
           },
         ],
       },
-      {
-        path: "user",
-        children: [
-          {
-            path: "",
-            loadChildren: () =>
-              import("./user/user.module").then((m) => m.UserModule),
-          },
-        ],
-      },
-      {
-        path: "agency",
-        children: [
-          {
-            path: "",
-            loadChildren: () =>
-              import("./agency/agency.module").then((m) => m.AgencyModule),
-          },
-        ],
-      },
+
       {
         path: "dashboard",
         loadChildren: () =>

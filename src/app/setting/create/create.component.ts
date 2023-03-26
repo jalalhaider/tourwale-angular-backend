@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
+import { ToastService } from "../../shared/toast.service";
 import { Setting } from "../models";
 import { SettingService } from "../setting.service";
 
@@ -12,7 +13,11 @@ import { SettingService } from "../setting.service";
 export class CreateComponent implements OnInit {
   formType = "Create";
   isLoading = false;
-  constructor(private settingService: SettingService, private router: Router) {}
+  constructor(
+    private toastService: ToastService,
+    private settingService: SettingService,
+    private router: Router
+  ) {}
   ngOnInit(): void {}
 
   onSubmit(dto: Setting) {
@@ -20,6 +25,7 @@ export class CreateComponent implements OnInit {
     this.settingService.create(dto).subscribe((setting) => {
       this.isLoading = !this.isLoading;
       this.router.navigateByUrl(`/setting/list`);
+      this.toastService.showSuccessToast("Success", "Setting Added");
     });
   }
 }

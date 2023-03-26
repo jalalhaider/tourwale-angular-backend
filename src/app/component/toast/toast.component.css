@@ -1,0 +1,26 @@
+.toast-body {
+  background-color: white;
+  color: black;
+}
+.btn-close {
+  color: white;
+  background-color: white;
+}
+.toast-header {
+  color: white;
+}
+.success > .toast-header {
+  background-color: Green;
+}
+
+.info > .toast-header {
+  background-color: #0d6efd;
+}
+
+.warning > .toast-header {
+  background-color: #ffc107;
+}
+
+.error > .toast-header {
+  background-color: #dc3545;
+}

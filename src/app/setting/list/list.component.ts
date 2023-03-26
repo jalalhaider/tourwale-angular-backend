@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { ToastService } from "../../shared/toast.service";
 import { Setting } from "../models";
 import { SettingService } from "../setting.service";
 

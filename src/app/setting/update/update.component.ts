@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ToastService } from "../../shared/toast.service";
 import { Setting } from "../models";
 import { SettingService } from "../setting.service";
 
@@ -15,6 +16,7 @@ export class UpdateComponent implements OnInit {
   data: Setting = {};
 
   constructor(
+    private toastService: ToastService,
     private settingSerivce: SettingService,
     private route: ActivatedRoute,
     private router: Router
@@ -38,6 +40,8 @@ export class UpdateComponent implements OnInit {
     this.settingSerivce.update(this.setting_id, dto).subscribe((setting) => {
       console.log("Setting Updated on Server", setting);
       this.isLoading = !this.isLoading;
+
+      this.toastService.showSuccessToast("Success", "Setting Updated");
       this.router.navigateByUrl(`/setting/list`);
     });
   }

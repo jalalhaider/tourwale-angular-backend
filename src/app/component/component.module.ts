@@ -13,6 +13,9 @@ import { ButtonsComponent } from "./buttons/buttons.component";
 import { CardsComponent } from "./card/card.component";
 import { TableComponent } from "./table/table.component";
 import { LoadingBarComponent } from "./loading-bar/loading-bar.component";
+import { ToastComponent } from "./toast/toast.component";
+import { ToasterComponent } from "./toast/toaster.component";
+import { ToastService } from "../shared/toast.service";
 
 @NgModule({
   imports: [
@@ -31,7 +34,10 @@ import { LoadingBarComponent } from "./loading-bar/loading-bar.component";
     CardsComponent,
     TableComponent,
     LoadingBarComponent,
+    ToastComponent,
+    ToasterComponent,
   ],
-  exports: [NgbdAlertBasicComponent, LoadingBarComponent],
+
+  exports: [NgbdAlertBasicComponent, LoadingBarComponent, ToasterComponent],
 })
 export class ComponentsModule {}
