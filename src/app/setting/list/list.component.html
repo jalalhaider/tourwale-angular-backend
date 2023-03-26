@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Settings</h4>
+        <h5 class="card-subtitle text-muted">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
+          laboriosam doloremque minus illo odit harum provident
+        </h5>
+
+        <a routerLink="/setting/create" class="btn btn-info"
+          ><i class="bi bi-wrench"></i> Add Setting</a
+        >
+        <div class="table-responsive">
+          <table class="table align-middle text-nowrap">
+            <thead>
+              <tr>
+                <th class="text-dark font-medium fs-4">No#</th>
+                <th class="text-dark font-medium fs-4">key</th>
+                <th class="text-dark font-medium fs-4">Value</th>
+                <th class="text-dark font-medium fs-4">isSerialized</th>
+                <th class="text-dark font-medium fs-4">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let setting of list" class="clickable-row">
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <h5 class="mb-0 font-medium">
+                        {{ setting.settingId }}
+                      </h5>
+                    </div>
+                  </div>
+                </td>
+                <td class="fs-4">{{ setting.key }}</td>
+                <td>
+                  <span>{{ setting.value }}</span>
+                </td>
+                <td>
+                  <div class="form-check form-switch">
+                    <input
+                      class="form-check-input cursor-pointer"
+                      type="checkbox"
+                      [checked]="setting.isSerialized"
+                    />
+                  </div>
+                </td>
+                <td>
+                  <button class="btn btn-info">
+                    <i class="bi bi-trash3"> </i>
+                  </button>
+                  &nbsp;
+                  <button class="btn btn-info">
+                    <i class="bi bi-pencil-square"> </i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,6 +11,16 @@ export const Approutes: Routes = [
     component: FullComponent,
     children: [
       {
+        path: "setting",
+        children: [
+          {
+            path: "",
+            loadChildren: () =>
+              import("./setting/setting.module").then((m) => m.SettingModule),
+          },
+        ],
+      },
+      {
         path: "user",
         children: [
           {
