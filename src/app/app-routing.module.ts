@@ -11,6 +11,16 @@ export const Approutes: Routes = [
     component: FullComponent,
     children: [
       {
+        path: "user",
+        children: [
+          {
+            path: "",
+            loadChildren: () =>
+              import("./user/user.module").then((m) => m.UserModule),
+          },
+        ],
+      },
+      {
         path: "setting",
         children: [
           {
@@ -20,7 +30,6 @@ export const Approutes: Routes = [
           },
         ],
       },
-
       {
         path: "dashboard",
         loadChildren: () =>
