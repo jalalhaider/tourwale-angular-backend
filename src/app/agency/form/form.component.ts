@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, Output } from "@angular/core";
-import { FormBuilder, ValidationErrors, Validators } from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
 import { EventEmitter } from "@angular/core";
 import { User } from "../models";
 
 @Component({
-  selector: "app-user-form",
+  selector: "app-setting-form",
   templateUrl: "./form.component.html",
 })
 export class FormComponent implements OnInit {
@@ -13,12 +13,11 @@ export class FormComponent implements OnInit {
   @Input() isLoading: boolean = false;
   @Output() onSubmit = new EventEmitter<User>();
 
-  errors: any[] = [];
   form = this.fb.group({
     name: ["", Validators.required],
     image: [""],
     email: ["", Validators.required],
-    password: ["", Validators.required],
+    passowrd: ["", Validators.required],
     username: ["", Validators.required],
     phone: ["", Validators.required],
     gender: [""],
@@ -43,25 +42,9 @@ export class FormComponent implements OnInit {
         password: this.form.get("password")?.value || "",
         username: this.form.get("username")?.value || "",
         phone: this.form.get("phone")?.value || "",
-        gender: this.form.get("gender")?.value ? "male" : "female",
+        gender: this.form.get("gender")?.value || "",
       };
       this.onSubmit.emit(dto);
-    } else {
-      this.getFormValidationErrors();
     }
-  }
-  getFormValidationErrors() {
-    Object.keys(this.form.controls).forEach((key) => {
-      const controlErrors: ValidationErrors = this.form.get(key)?.errors || [];
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach((keyError) => {
-          this.errors.push({
-            field: key,
-            message: keyError,
-          });
-          console.log(controlErrors[keyError]);
-        });
-      }
-    });
   }
 }

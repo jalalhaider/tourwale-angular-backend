@@ -3,7 +3,7 @@ import { FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ToastService } from "../../shared/toast.service";
 import { User } from "../models";
-import { UserService } from "../user.service";
+import { UserService } from "../agency.service";
 
 @Component({
   selector: "app-user",
@@ -22,17 +22,10 @@ export class CreateComponent implements OnInit {
 
   onSubmit(dto: User) {
     this.isLoading = !this.isLoading;
-    this.userService.create(dto).subscribe({
-      next: this.handleResponse.bind(this),
-      error: (err) => {
-        this.isLoading = !this.isLoading;
-        this.toastService.showErrorToast("Failed", err.message);
-      },
+    this.userService.create(dto).subscribe((user) => {
+      this.isLoading = !this.isLoading;
+      this.router.navigateByUrl(`/user/list`);
+      this.toastService.showSuccessToast("Success", "User Added");
     });
-  }
-  handleResponse(user: any) {
-    this.isLoading = !this.isLoading;
-    this.router.navigateByUrl(`/user/list`);
-    this.toastService.showSuccessToast("Success", "User Added");
   }
 }

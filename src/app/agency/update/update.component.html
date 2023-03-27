@@ -2,11 +2,12 @@
   <div class="col-12">
     <div class="card">
       <app-loading-bar *ngIf="isLoading"></app-loading-bar>
-      <app-user-form
+      <app-setting-form
+        [data]="data"
         [formType]="formType"
         [isLoading]="isLoading"
         (onSubmit)="onSubmit($event)"
-      ></app-user-form>
+      ></app-setting-form>
     </div>
   </div>
 </div>

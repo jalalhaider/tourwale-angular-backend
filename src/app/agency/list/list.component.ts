@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { ToastService } from "../../shared/toast.service";
 import { User } from "../models";
-import { UserService } from "../user.service";
+import { UserService } from "../agency.service";
 
 @Component({
   selector: "app-user-list",
@@ -10,21 +10,13 @@ import { UserService } from "../user.service";
 })
 export class ListComponent {
   list: User[] = [];
-  error = null;
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
     const where = {};
-    this.userService.getList(where).subscribe({
-      next: this.handleResponse.bind(this),
-      error: (error) => {
-        this.error = error.message;
-      },
+    this.userService.getList(where).subscribe((result) => {
+      this.list = result;
     });
-  }
-
-  handleResponse(result: User[]) {
-    this.list = result;
   }
 
   onClick($event: any, row: User) {

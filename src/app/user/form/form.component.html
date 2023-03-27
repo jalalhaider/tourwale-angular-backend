@@ -1,61 +1,141 @@
 <form [formGroup]="form" (ngSubmit)="handleSubmit()">
   <div class="card-body">
-    <h2 class="">Setting</h2>
-    <p>System setting form</p>
+    <h2 class="">User</h2>
+    <p>System User form</p>
+
+    <ngb-alert
+      *ngIf="errors.length > 0"
+      [type]="'danger'"
+      [dismissible]="true"
+      class="customize-alert fs-5"
+    >
+      <div *ngFor="let error of errors">
+        {{ error.field }} : {{ error.message }}
+      </div>
+    </ngb-alert>
 
     <div class="row">
       <div class="col-sm-12 col-md-6">
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label"
-            ><sup style="color: red">*</sup> Key
+            ><sup style="color: red">*</sup> Name
           </label>
           <input
             type="text"
             class="form-control"
-            placeholder="Enter Key"
-            formControlName="key"
+            placeholder="Enter Name"
+            formControlName="name"
           />
           <span
             style="color: red"
-            *ngIf="!form.get('key')?.valid && form.get('key')?.touched"
-            >Key is required</span
+            *ngIf="!form.get('name')?.valid && form.get('name')?.touched"
+            >name is required</span
           >
         </div>
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label"
-            ><sup style="color: red">*</sup> Value
+            ><sup style="color: red">*</sup> Image
           </label>
           <input
             type="text"
             class="form-control"
-            placeholder="Enter Value"
-            formControlName="value"
+            placeholder="Enter Image"
+            formControlName="image"
           />
           <span
             style="color: red"
-            *ngIf="!form.get('value')?.valid && form.get('value')?.touched"
-            >Value is required</span
+            *ngIf="!form.get('image')?.valid && form.get('image')?.touched"
+            >image is required</span
           >
         </div>
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label"
-            ><sup style="color: red">*</sup> Is Serialized
+            ><sup style="color: red">*</sup> email
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter email"
+            formControlName="email"
+          />
+          <span
+            style="color: red"
+            *ngIf="!form.get('email')?.valid && form.get('email')?.touched"
+            >email is required</span
+          >
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><sup style="color: red">*</sup> Password
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Password"
+            formControlName="password"
+          />
+          <span
+            style="color: red"
+            *ngIf="
+              !form.get('password')?.valid && form.get('password')?.touched
+            "
+            >Password is required</span
+          >
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><sup style="color: red">*</sup> Username
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Username"
+            formControlName="username"
+          />
+          <span
+            style="color: red"
+            *ngIf="
+              !form.get('username')?.valid && form.get('username')?.touched
+            "
+            >Username is required</span
+          >
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><sup style="color: red">*</sup> Phone
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Phone"
+            formControlName="phone"
+          />
+          <span
+            style="color: red"
+            *ngIf="!form.get('phone')?.valid && form.get('phone')?.touched"
+            >Phone is required</span
+          >
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><sup style="color: red">*</sup> Gender
           </label>
           <div class="form-check form-switch">
             <input
               class="form-check-input cursor-pointer"
               type="checkbox"
-              formControlName="isSerialized"
+              formControlName="gender"
             />
           </div>
         </div>
       </div>
-      <div class="col-sm-12 col-md-6"></div>
     </div>
 
     <div class="row">
       <div class="col-12 align-self-end">
-        <button class="btn btn-info" type="submit" [disabled]="!form.valid">
+        <button class="btn btn-info" type="submit">
           <i class="bi bi-save"></i>
           <span> Save</span>
         </button>
