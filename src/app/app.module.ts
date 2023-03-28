@@ -27,6 +27,7 @@ import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { AuthComponent } from "./layouts/auth/auth.component";
 import { ComponentsModule } from "./component/component.module";
 import { ToastService } from "./shared/toast.service";
+import { LocalStorageService } from "./shared/localstorage.service";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -61,6 +62,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ],
   providers: [
     ToastService,
+    LocalStorageService,
     {
       provide: LocationStrategy,
       useClass: PathLocationStrategy,

@@ -36,11 +36,16 @@ export class FormComponent implements OnInit {
   handleSubmit(): void {
     //emit form values after validating
     if (this.form.valid) {
+      let password = this.data.password;
+
+      if (this.form.get("password")?.value != this.data.password)
+        password = this.form.get("password")?.value!;
+
       const dto: User = {
         name: this.form.get("name")?.value || "",
         image: this.form.get("image")?.value || "",
         email: this.form.get("email")?.value || "",
-        password: this.form.get("password")?.value || "",
+        password: password,
         username: this.form.get("username")?.value || "",
         phone: this.form.get("phone")?.value || "",
         gender: this.form.get("gender")?.value ? "male" : "female",

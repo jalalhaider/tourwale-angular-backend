@@ -3,42 +3,38 @@ import { Routes, RouterModule } from "@angular/router";
 import { AuthComponent } from "./layouts/auth/auth.component";
 
 import { FullComponent } from "./layouts/full/full.component";
-import { LoginComponent } from "./login/login.component";
+import { LoginComponent } from "./auth/login/login.component";
 
 export const Approutes: Routes = [
+  {
+    path: "auth",
+    component: AuthComponent,
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("./auth/auth.module").then((m) => m.AuthModule),
+      },
+    ],
+  },
   {
     path: "",
     component: FullComponent,
     children: [
       {
         path: "user",
-        children: [
-          {
-            path: "",
-            loadChildren: () =>
-              import("./user/user.module").then((m) => m.UserModule),
-          },
-        ],
+        loadChildren: () =>
+          import("./user/user.module").then((m) => m.UserModule),
       },
       {
         path: "agency",
-        children: [
-          {
-            path: "",
-            loadChildren: () =>
-              import("./agency/agency.module").then((m) => m.AgencyModule),
-          },
-        ],
+        loadChildren: () =>
+          import("./agency/agency.module").then((m) => m.AgencyModule),
       },
       {
         path: "setting",
-        children: [
-          {
-            path: "",
-            loadChildren: () =>
-              import("./setting/setting.module").then((m) => m.SettingModule),
-          },
-        ],
+        loadChildren: () =>
+          import("./setting/setting.module").then((m) => m.SettingModule),
       },
       {
         path: "dashboard",
@@ -59,19 +55,10 @@ export const Approutes: Routes = [
       },
     ],
   },
+
   {
-    path: "auth",
-    component: AuthComponent, //Layout component
-    children: [
-      {
-        path: "login",
-        loadChildren: () =>
-          import("./login/login.module").then((m) => m.LoginModule),
-      },
-    ],
-  },
-  {
-    path: "**",
-    redirectTo: "/dashboard",
+    path: "",
+    pathMatch: "full",
+    redirectTo: "dsf/dashboard",
   },
 ];
