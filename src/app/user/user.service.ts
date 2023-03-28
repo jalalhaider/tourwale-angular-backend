@@ -43,7 +43,6 @@ export class UserService {
   create(dto: User) {
     const httpOption = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       }),
     };
@@ -55,8 +54,6 @@ export class UserService {
   update(id: number, dto: User) {
     const httpOption = {
       headers: new HttpHeaders({
-        "Content-Type": "application/json",
-
         Authorization: "Bearer " + token,
       }),
     };

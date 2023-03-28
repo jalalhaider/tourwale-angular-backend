@@ -2,18 +2,22 @@ import { Component, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, ValidationErrors, Validators } from "@angular/forms";
 import { EventEmitter } from "@angular/core";
 import { User } from "../models";
+import { UtilService } from "../../shared/util.service";
+import { environment } from "../../../environments/environment";
 
 @Component({
   selector: "app-user-form",
   templateUrl: "./form.component.html",
+  styleUrls: ["./form.component.css"],
 })
 export class FormComponent implements OnInit {
   @Input() formType: string = "";
   @Input() data: User = {};
   @Input() isLoading: boolean = false;
-  @Output() onSubmit = new EventEmitter<User>();
+  @Output() onSubmit = new EventEmitter<any>();
 
   errors: any[] = [];
+  imageSrc: string = "assets/images/users/user1.jpg";
   form = this.fb.group({
     name: ["", Validators.required],
     image: [""],
@@ -24,13 +28,19 @@ export class FormComponent implements OnInit {
     gender: [""],
   });
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private utilService: UtilService) {}
 
   ngOnInit(): void {}
+
   ngOnChanges() {
     this.form.patchValue({
       ...this.data,
     });
+
+    if (this.data.image !== "" && this.data.image != undefined) {
+      console.log("this.data.image", this.data.image);
+      this.imageSrc = `${environment.imageBaseURL}/${this.data.image}`;
+    }
   }
 
   handleSubmit(): void {
@@ -41,20 +51,16 @@ export class FormComponent implements OnInit {
       if (this.form.get("password")?.value != this.data.password)
         password = this.form.get("password")?.value!;
 
-      const dto: User = {
-        name: this.form.get("name")?.value || "",
-        image: this.form.get("image")?.value || "",
-        email: this.form.get("email")?.value || "",
+      const dto: any = {
+        ...this.form.value,
         password: password,
-        username: this.form.get("username")?.value || "",
-        phone: this.form.get("phone")?.value || "",
-        gender: this.form.get("gender")?.value ? "male" : "female",
       };
-      this.onSubmit.emit(dto);
+      this.onSubmit.emit(this.utilService.toFormData(dto));
     } else {
       this.getFormValidationErrors();
     }
   }
+
   getFormValidationErrors() {
     Object.keys(this.form.controls).forEach((key) => {
       const controlErrors: ValidationErrors = this.form.get(key)?.errors || [];
@@ -68,5 +74,20 @@ export class FormComponent implements OnInit {
         });
       }
     });
+  }
+
+  onFileChange(event: any) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      console.log("file", file);
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.imageSrc = reader.result as string;
+        this.form.controls.image.setValue(file);
+      };
+    }
   }
 }
