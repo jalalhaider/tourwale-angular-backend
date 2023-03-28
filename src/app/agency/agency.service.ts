@@ -9,27 +9,27 @@ export class AgencyService {
 
   get(id: number): Observable<Agency> {
     return this.http
-      .get("http://localhost:4100/api/v1/user/" + id)
+      .get("http://localhost:4100/api/v1/agency/" + id)
       .pipe(catchError(this.handleError));
   }
 
   getList(where: any): Observable<any> {
     return this.http
-      .get("http://localhost:4100/api/v1/user")
+      .get("http://localhost:4100/api/v1/agency")
       .pipe(catchError(catchError(this.handleError)));
   }
 
   create(dto: Agency) {
     const httpOption = {};
     return this.http
-      .post("http://localhost:4100/api/v1/user", dto, httpOption)
+      .post("http://localhost:4100/api/v1/agency", dto, httpOption)
       .pipe(catchError(this.handleError));
   }
 
   update(id: number, dto: Agency) {
     const httpOption = {};
     return this.http
-      .put("http://localhost:4100/api/v1/user/" + id, dto, httpOption)
+      .put("http://localhost:4100/api/v1/agency/" + id, dto, httpOption)
       .pipe(catchError(this.handleError));
   }
 
@@ -45,7 +45,7 @@ export class AgencyService {
         error.error
       );
     }
-    // Return an observable with a user-facing error message.
+    // Return an observable with a agency-facing error message.
     return throwError(
       () => new Error("Something bad happened; please try again later.")
     );

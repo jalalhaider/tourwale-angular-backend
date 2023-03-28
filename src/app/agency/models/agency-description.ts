@@ -1,4 +1,4 @@
-export class AgencyDesscription {
+export class AgencyDescription {
   languageId?: number;
   name?: string;
   description?: string;

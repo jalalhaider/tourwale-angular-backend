@@ -10,6 +10,7 @@ import { ListComponent } from "./list/list.component";
 import { routes } from "./agency.routing";
 import { AgencyService } from "./agency.service";
 import { UpdateComponent } from "./update/update.component";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   imports: [
@@ -18,13 +19,14 @@ import { UpdateComponent } from "./update/update.component";
     RouterModule.forChild(routes),
     HttpClientModule,
     ComponentsModule,
+    NgbModule,
   ],
   providers: [AgencyService],
   declarations: [
-    CreateComponent,
     FormComponent,
-    UpdateComponent,
     ListComponent,
+    CreateComponent,
+    UpdateComponent,
   ],
 })
 export class AgencyModule {}

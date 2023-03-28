@@ -1,48 +1,48 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastService } from "../../shared/toast.service";
-import { User } from "../models";
-import { UserService } from "../agency.service";
+import { Agency } from "../models";
+import { AgencyService } from "../agency.service";
 
 @Component({
-  selector: "app-user",
+  selector: "app-agency",
   templateUrl: "./update.component.html",
   styles: [],
 })
 export class UpdateComponent implements OnInit {
   isLoading: boolean = true;
   formType = "Update";
-  user_id = 0;
-  data: User = {};
+  agency_id = 0;
+  data: Agency = {};
 
   constructor(
     private toastService: ToastService,
-    private userSerivce: UserService,
+    private agencySerivce: AgencyService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.user_id = params["user_id"];
-      this.getUser();
+      this.agency_id = params["agency_id"];
+      this.getAgency();
     });
   }
 
-  getUser() {
-    this.userSerivce.get(this.user_id).subscribe((res) => {
+  getAgency() {
+    this.agencySerivce.get(this.agency_id).subscribe((res) => {
       this.data = res;
     });
     this.isLoading = !this.isLoading;
   }
 
-  onSubmit(dto: User) {
+  onSubmit(dto: Agency) {
     this.isLoading = !this.isLoading;
-    this.userSerivce.update(this.user_id, dto).subscribe((user) => {
-      console.log("User Updated on Server", user);
+    this.agencySerivce.update(this.agency_id, dto).subscribe((agency) => {
+      console.log("Agency Updated on Server", agency);
       this.isLoading = !this.isLoading;
 
-      this.toastService.showSuccessToast("Success", "User Updated");
-      this.router.navigateByUrl(`/user/list`);
+      this.toastService.showSuccessToast("Success", "Agency Updated");
+      this.router.navigateByUrl(`/agency/list`);
     });
   }
 }

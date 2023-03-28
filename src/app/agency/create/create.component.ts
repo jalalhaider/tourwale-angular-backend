@@ -2,11 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ToastService } from "../../shared/toast.service";
-import { User } from "../models";
-import { UserService } from "../agency.service";
+import { Agency } from "../models";
+import { AgencyService } from "../agency.service";
 
 @Component({
-  selector: "app-user",
+  selector: "app-agency",
   templateUrl: "./create.component.html",
   styles: [],
 })
@@ -15,17 +15,17 @@ export class CreateComponent implements OnInit {
   isLoading = false;
   constructor(
     private toastService: ToastService,
-    private userService: UserService,
+    private agencyService: AgencyService,
     private router: Router
   ) {}
   ngOnInit(): void {}
 
-  onSubmit(dto: User) {
+  onSubmit(dto: Agency) {
     this.isLoading = !this.isLoading;
-    this.userService.create(dto).subscribe((user) => {
+    this.agencyService.create(dto).subscribe((agency) => {
       this.isLoading = !this.isLoading;
-      this.router.navigateByUrl(`/user/list`);
-      this.toastService.showSuccessToast("Success", "User Added");
+      this.router.navigateByUrl(`/agency/list`);
+      this.toastService.showSuccessToast("Success", "Agency Added");
     });
   }
 }

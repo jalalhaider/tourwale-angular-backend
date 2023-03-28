@@ -1,19 +1,29 @@
 <form [formGroup]="form" (ngSubmit)="handleSubmit()">
   <div class="card-body">
-    <h2 class="">Setting</h2>
-    <p>System setting form</p>
+    <h2 class="">Agency</h2>
+    <p>System agency form</p>
 
+    <ngb-alert
+      *ngIf="errors.length > 0"
+      [type]="'danger'"
+      [dismissible]="true"
+      class="customize-alert fs-5"
+    >
+      <div *ngFor="let error of errors">
+        {{ error.field }} : {{ error.message }}
+      </div>
+    </ngb-alert>
     <div class="row">
       <div class="col-sm-12 col-md-6">
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label"
-            ><sup style="color: red">*</sup> Key
+            ><sup style="color: red">*</sup> slug
           </label>
           <input
             type="text"
             class="form-control"
-            placeholder="Enter Key"
-            formControlName="key"
+            placeholder="Enter Slug"
+            formControlName="slug"
           />
           <span
             style="color: red"
@@ -21,41 +31,282 @@
             >Key is required</span
           >
         </div>
+
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label"
-            ><sup style="color: red">*</sup> Value
-          </label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Enter Value"
-            formControlName="value"
-          />
-          <span
-            style="color: red"
-            *ngIf="!form.get('value')?.valid && form.get('value')?.touched"
-            >Value is required</span
-          >
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label"
-            ><sup style="color: red">*</sup> Is Serialized
+            ><sup style="color: red">*</sup> Is Active
           </label>
           <div class="form-check form-switch">
             <input
               class="form-check-input cursor-pointer"
               type="checkbox"
-              formControlName="isSerialized"
+              formControlName="isActive"
+            />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><sup style="color: red">*</sup> Is Black Listed
+          </label>
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input cursor-pointer"
+              type="checkbox"
+              formControlName="isBlacklisted"
             />
           </div>
         </div>
       </div>
       <div class="col-sm-12 col-md-6"></div>
     </div>
+    <div class="row" formGroupName="description">
+      <div class="col-md-6" formGroupName="en">
+        <h2 class="">English</h2>
+
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><sup style="color: red">*</sup> Name
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Name"
+            formControlName="name"
+          />
+          <span
+            style="color: red"
+            *ngIf="
+              !agencyDescription('en')?.get('name')?.valid &&
+              agencyDescription('en')?.get('name')?.touched
+            "
+            >Name is required</span
+          >
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><sup style="color: red">*</sup> Description
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Description"
+            formControlName="description"
+          />
+          <span
+            style="color: red"
+            *ngIf="
+              !agencyDescription('en')?.get('description')?.valid &&
+              agencyDescription('en')?.get('description')?.touched
+            "
+            >Description is required</span
+          >
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><sup style="color: red">*</sup> Image
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Image"
+            formControlName="image"
+          />
+          <span
+            style="color: red"
+            *ngIf="
+              !agencyDescription('en')?.get('image')?.valid &&
+              agencyDescription('en')?.get('image')?.touched
+            "
+            >Image is required</span
+          >
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><sup style="color: red">*</sup> Cover Image
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Cover Image"
+            formControlName="coverImage"
+          />
+          <span
+            style="color: red"
+            *ngIf="
+              !agencyDescription('en')?.get('coverImage')?.valid &&
+              agencyDescription('en')?.get('coverImage')?.touched
+            "
+            >Cover Image is required</span
+          >
+        </div>
+      </div>
+      <div class="col-md-6" formGroupName="ar">
+        <h2 class="">Arabic</h2>
+
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><sup style="color: red">*</sup> Name
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Name"
+            formControlName="name"
+          />
+          <span
+            style="color: red"
+            *ngIf="
+              !agencyDescription('ar')?.get('name')?.valid &&
+              agencyDescription('ar')?.get('name')?.touched
+            "
+            >Name is required</span
+          >
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><sup style="color: red">*</sup> Description
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Description"
+            formControlName="description"
+          />
+          <span
+            style="color: red"
+            *ngIf="
+              !agencyDescription('ar')?.get('description')?.valid &&
+              agencyDescription('ar')?.get('description')?.touched
+            "
+            >Description is required</span
+          >
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><sup style="color: red">*</sup> Image
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Image"
+            formControlName="image"
+          />
+          <span
+            style="color: red"
+            *ngIf="
+              !agencyDescription('ar')?.get('image')?.valid &&
+              agencyDescription('ar')?.get('image')?.touched
+            "
+            >Image is required</span
+          >
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><sup style="color: red">*</sup> Cover Image
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Cover Image"
+            formControlName="coverImage"
+          />
+          <span
+            style="color: red"
+            *ngIf="
+              !agencyDescription('ar')?.get('coverImage')?.valid &&
+              agencyDescription('ar')?.get('coverImage')?.touched
+            "
+            >Cover Image is required</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="row" formArrayName="socialMedia">
+      <h4 class="card-title">
+        Social Media
+        <a class="btn btn-info" (click)="addSocialMedia()">
+          Add Social Media
+        </a>
+      </h4>
+      <div class="table-responsive">
+        <table class="table table-bordered align-middle text-nowrap">
+          <thead>
+            <tr>
+              <th class="text-dark font-medium fs-4">#</th>
+              <th class="text-dark font-medium fs-4">Type</th>
+              <th class="text-dark font-medium fs-4">Followers</th>
+              <th class="text-dark font-medium fs-4">Web Link</th>
+              <th class="text-dark font-medium fs-4">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let sm of socialMedia.controls; let i = index"
+              formGroupName="{{ i }}"
+            >
+              <td>
+                {{ i + 1 }}
+              </td>
+              <td>
+                <input
+                  id="alias-{{ i }}"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Type"
+                  formControlName="type"
+                />
+                <span
+                  style="color: red"
+                  *ngIf="!sm.get('type')?.valid && sm.get('type')?.touched"
+                  >Type is required</span
+                >
+              </td>
+              <td>
+                <input
+                  id="alias-{{ i }}"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Followers"
+                  formControlName="followers"
+                />
+
+                <span
+                  style="color: red"
+                  *ngIf="
+                    !sm.get('followers')?.valid && sm.get('followers')?.touched
+                  "
+                  >Followers is required</span
+                >
+              </td>
+              <td>
+                <input
+                  id="alias-{{ i }}"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Link"
+                  formControlName="link"
+                />
+                <span
+                  style="color: red"
+                  *ngIf="!sm.get('link')?.valid && sm.get('link')?.touched"
+                  >Link is required</span
+                >
+              </td>
+              <td>
+                <button class="btn btn-info" (click)="removeSocialMedia(i)">
+                  delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-12 align-self-end">
-        <button class="btn btn-info" type="submit" [disabled]="!form.valid">
+        <button class="btn btn-info" type="submit">
           <i class="bi bi-save"></i>
           <span> Save</span>
         </button>
