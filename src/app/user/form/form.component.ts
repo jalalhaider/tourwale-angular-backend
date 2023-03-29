@@ -38,7 +38,6 @@ export class FormComponent implements OnInit {
     });
 
     if (this.data.image !== "" && this.data.image != undefined) {
-      console.log("this.data.image", this.data.image);
       this.imageSrc = `${environment.imageBaseURL}/${this.data.image}`;
     }
   }
@@ -46,15 +45,10 @@ export class FormComponent implements OnInit {
   handleSubmit(): void {
     //emit form values after validating
     if (this.form.valid) {
-      let password = this.data.password;
-
-      if (this.form.get("password")?.value != this.data.password)
-        password = this.form.get("password")?.value!;
-
       const dto: any = {
         ...this.form.value,
-        password: password,
       };
+
       this.onSubmit.emit(this.utilService.toFormData(dto));
     } else {
       this.getFormValidationErrors();
