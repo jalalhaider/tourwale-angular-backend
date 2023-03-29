@@ -1,26 +1,26 @@
-import { Component, Input, OnInit, Output } from "@angular/core";
+import { Component, Input, OnInit, Output } from "@angular/core"
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   ValidationErrors,
   Validators,
-} from "@angular/forms";
-import { EventEmitter } from "@angular/core";
-import { Agency, AgencyDescription } from "../models";
-import { ToastService } from "../../shared/toast.service";
+} from "@angular/forms"
+import { EventEmitter } from "@angular/core"
+import { Agency, AgencyDescription } from "../models"
+import { ToastService } from "../../shared/toast.service"
 
 @Component({
   selector: "app-agency-form",
   templateUrl: "./form.component.html",
 })
 export class FormComponent implements OnInit {
-  @Input() formType: string = "";
-  @Input() data: Agency = {};
-  @Input() isLoading: boolean = false;
-  @Output() onSubmit = new EventEmitter<Agency>();
+  @Input() formType: string = ""
+  @Input() data: Agency = {}
+  @Input() isLoading: boolean = false
+  @Output() onSubmit = new EventEmitter<Agency>()
 
-  errors: any[] = [];
+  errors: any[] = []
 
   form = this.fb.group({
     slug: ["", Validators.required],
@@ -49,13 +49,13 @@ export class FormComponent implements OnInit {
         link: ["", Validators.required],
       }), */
     ]),
-  });
+  })
 
   constructor(private fb: FormBuilder, private toastService: ToastService) {}
 
   ngOnInit(): void {}
   ngOnChanges() {
-    if (!Object.keys(this.data).length) return;
+    if (!Object.keys(this.data).length) return
 
     this.form.patchValue({
       slug: this.data.slug,
@@ -65,7 +65,7 @@ export class FormComponent implements OnInit {
         en: this.data.description?.en,
         ar: this.data.description?.ar,
       },
-    });
+    })
     this.data.socialMedia?.map((sm) => {
       this.socialMedia.push(
         this.fb.group({
@@ -73,13 +73,13 @@ export class FormComponent implements OnInit {
           followers: [sm.followers, Validators.required],
           link: [sm.link, Validators.required],
         })
-      );
-    });
+      )
+    })
   }
 
   handleSubmit(): void {
     //emit form values after validating
-    console.log("this.form", this.form.value);
+    console.log("this.form", this.form.value)
     if (this.form.valid) {
       const dto: any = {
         ...this.form.value,
@@ -87,27 +87,27 @@ export class FormComponent implements OnInit {
           this.form.value.description?.en,
           this.form.value.description?.ar,
         ],
-      };
-      this.onSubmit.emit(dto);
+      }
+      this.onSubmit.emit(dto)
     } else {
-      this.getFormValidationErrors();
-      this.toastService.showErrorToast("Failed", "Invalid Form");
+      this.getFormValidationErrors()
+      this.toastService.showErrorToast("Failed", "Invalid Form")
     }
   }
 
   getFormValidationErrors() {
     Object.keys(this.form.controls).forEach((key) => {
-      const controlErrors: ValidationErrors = this.form.get(key)?.errors || [];
+      const controlErrors: ValidationErrors = this.form.get(key)?.errors || []
       if (controlErrors != null) {
         Object.keys(controlErrors).forEach((keyError) => {
           this.errors.push({
             field: key,
             message: keyError,
-          });
-          console.log(controlErrors[keyError]);
-        });
+          })
+          console.log(controlErrors[keyError])
+        })
       }
-    });
+    })
   }
 
   addSocialMedia() {
@@ -117,16 +117,16 @@ export class FormComponent implements OnInit {
         followers: ["", Validators.required],
         link: ["", Validators.required],
       })
-    );
+    )
   }
   removeSocialMedia(i: number) {
-    this.socialMedia.removeAt(i);
+    this.socialMedia.removeAt(i)
   }
 
   get socialMedia(): FormArray {
-    return this.form.get("socialMedia") as FormArray;
+    return this.form.get("socialMedia") as FormArray
   }
   agencyDescription(language: string): FormGroup {
-    return this.form.get("description")?.get(language) as FormGroup;
+    return this.form.get("description")?.get(language) as FormGroup
   }
 }
