@@ -22,6 +22,11 @@ export const Approutes: Routes = [
     component: FullComponent,
     children: [
       {
+        path: "playground",
+        loadChildren: () =>
+          import("./playground/playground.module").then((m) => m.PlaygroundModule),
+      },
+      {
         path: "user",
         loadChildren: () =>
           import("./user/user.module").then((m) => m.UserModule),
