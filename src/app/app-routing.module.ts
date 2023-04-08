@@ -27,6 +27,11 @@ export const Approutes: Routes = [
           import("./user/user.module").then((m) => m.UserModule),
       },
       {
+        path: "tour",
+        loadChildren: () =>
+          import("./tour/tour.module").then((m) => m.TourModule),
+      },
+      {
         path: "agency",
         loadChildren: () =>
           import("./agency/agency.module").then((m) => m.AgencyModule),

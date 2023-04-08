@@ -10,6 +10,14 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
+    path: "/tour/list",
+    title: "Tour",
+    icon: "bi bi-people",
+    class: "",
+    extralink: false,
+    submenu: [],
+  },
+  {
     path: "/user/list",
     title: "User",
     icon: "bi bi-people",
