@@ -38,7 +38,7 @@ export class FormComponent implements OnInit {
     });
 
     if (this.data.image !== "" && this.data.image != undefined) {
-      this.imageSrc = `${environment.imageBaseURL}/${this.data.image}`;
+      this.imageSrc = `${this.data.image}`;
     }
   }
 

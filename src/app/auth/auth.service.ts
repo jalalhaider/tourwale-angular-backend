@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
-import { catchError, Observable, tap, throwError } from "rxjs";
+import { catchError, delay, Observable, tap, throwError } from "rxjs";
 import { ILogin } from "./models";
 import { LocalStorageService } from "../shared/localstorage.service";
 
@@ -17,20 +17,18 @@ export class AuthService {
   login(dto: ILogin): Observable<any> {
     return this.http.post(`${environment.url}/api/v1/auth/sign-in`, dto).pipe(
       tap((res) => {
+
         this.save_token(res);
-      }),
+      },delay(1000)),
       catchError(this.handleError)
     );
   }
   logout() {
-    this.localstorage.removeItem("accessToken");
     this.localstorage.removeItem("user");
   }
 
   private save_token(data: any) {
-    this.localstorage.setItem("accessToken", data.accessToken);
-    console.log(" data.user", data.user);
-    this.localstorage.setItem("user", JSON.stringify(data.user));
+    this.localstorage.setItem("user", JSON.stringify(data));
     return;
   }
   private handleError(error: HttpErrorResponse) {

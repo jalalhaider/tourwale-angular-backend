@@ -31,7 +31,11 @@ export class NavigationComponent implements AfterViewInit, OnInit {
     private localstorage: LocalStorageService
   ) {}
   ngOnInit(): void {
-    this.user = JSON.parse(this.localstorage.getItem("user"));
+    try{
+      this.user = JSON.parse(this.localstorage.getItem("user"));
+    }catch(ex){
+  
+    }
   }
 
   // This is for Notifications
