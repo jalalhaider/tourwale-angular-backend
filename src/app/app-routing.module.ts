@@ -27,6 +27,11 @@ export const Approutes: Routes = [
           import("./playground/playground.module").then((m) => m.PlaygroundModule),
       },
       {
+        path: "category",
+        loadChildren: () =>
+          import("./category/category.module").then((m) => m.CategoryModule),
+      },
+      {
         path: "user",
         loadChildren: () =>
           import("./user/user.module").then((m) => m.UserModule),
