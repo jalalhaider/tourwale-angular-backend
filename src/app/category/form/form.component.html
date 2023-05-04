@@ -1,0 +1,40 @@
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
+  <div class="card-body">
+    <h2 class="">Category</h2>
+    <p>System Category form</p>
+
+    <ngb-alert *ngIf="errors.length > 0" [type]="'danger'" [dismissible]="true" class="customize-alert fs-5">
+      <div *ngFor="let error of errors">{{ error.field }} : {{ error.message }}</div>
+    </ngb-alert>
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <div class="mb-3">
+          <label for="title-input" class="form-label"><sup style="color: red">*</sup> Title </label>
+          <input id="title-input" type="text" class="form-control" placeholder="Enter Title" formControlName="title" />
+          <span style="color: red" *ngIf="!form.get('title')?.valid && form.get('title')?.touched">Title is required</span>
+        </div>
+        <div class="mb-3">
+          <label for="description-input" class="form-label"><sup style="color: red">*</sup> Description </label>
+          <textarea id="description-input" class="form-control" placeholder="Enter Description" formControlName="description"></textarea>
+          <span style="color: red" *ngIf="!form.get('description')?.valid && form.get('description')?.touched">Description is required</span>
+        </div>
+
+        <div class="mb-3">
+          <label for="active-input" class="form-label"><sup style="color: red">*</sup> Is Active </label>
+          <div class="form-check form-switch">
+            <input id="active-input" class="form-check-input cursor-pointer" type="checkbox" formControlName="isActive" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 align-self-end">
+        <button class="btn btn-info" type="submit">
+          <i class="bi bi-save"></i>
+          <span> Save</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
