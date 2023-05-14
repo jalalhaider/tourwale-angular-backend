@@ -23,8 +23,16 @@ export class AuthGuard implements CanActivate {
   ): boolean | UrlTree {
     // Check if the user is authenticated or meets certain criteria
 
-    const user = JSON.parse(this.localstorage.getItem("user"))
-    const isAuthenticated = !!user // Replace with your authentication logic
+    let userObj = false
+    try {
+      const user = this.localstorage.getItem("user")
+      userObj = user ? JSON.parse(user) : false
+    } catch (error) {
+      console.error(error)
+      this.localstorage.removeItem("user")
+    }
+
+    const isAuthenticated = !!userObj // Replace with your authentication logic
 
     if (isAuthenticated) {
       return true // Allow access to the route
