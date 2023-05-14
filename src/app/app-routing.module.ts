@@ -1,9 +1,10 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
-import { AuthComponent } from "./layouts/auth/auth.component";
+import { NgModule } from "@angular/core"
+import { Routes, RouterModule } from "@angular/router"
+import { AuthComponent } from "./layouts/auth/auth.component"
 
-import { FullComponent } from "./layouts/full/full.component";
-import { LoginComponent } from "./auth/login/login.component";
+import { FullComponent } from "./layouts/full/full.component"
+import { LoginComponent } from "./auth/login/login.component"
+import { AuthGuard } from "./guards/auth.guard"
 
 export const Approutes: Routes = [
   {
@@ -20,11 +21,14 @@ export const Approutes: Routes = [
   {
     path: "",
     component: FullComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: "playground",
         loadChildren: () =>
-          import("./playground/playground.module").then((m) => m.PlaygroundModule),
+          import("./playground/playground.module").then(
+            (m) => m.PlaygroundModule
+          ),
       },
       {
         path: "category",
@@ -70,10 +74,5 @@ export const Approutes: Routes = [
       },
     ],
   },
-
-  {
-    path: "",
-    pathMatch: "full",
-    redirectTo: "dsf/dashboard",
-  },
-];
+  { path: "", redirectTo: "/auth/login", pathMatch: "full" },
+]

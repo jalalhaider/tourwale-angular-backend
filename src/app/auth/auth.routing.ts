@@ -1,20 +1,13 @@
-import { LoginComponent } from "./login/login.component";
+import { Routes } from "@angular/router"
+import { LoginComponent } from "./login/login.component"
 
-export const routes = [
+export const routes: Routes = [
   {
     path: "login",
-    data: {
-      title: "Login",
-      urls: [{ title: "Login", url: "/login" }, { title: "Login" }],
-    },
     component: LoginComponent,
   },
   {
     path: "forget-password",
-    data: {
-      title: "Forget Password",
-      urls: [{ title: "Forget Password", url: "/forget-password" }],
-    },
     component: LoginComponent,
   },
-];
+]
