@@ -6,19 +6,25 @@ import {
   UrlTree,
   Router,
 } from "@angular/router"
+import { LocalStorageService } from "../shared/localstorage.service"
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private localstorage: LocalStorageService
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean | UrlTree {
     // Check if the user is authenticated or meets certain criteria
-    const isAuthenticated = false // Replace with your authentication logic
+
+    const user = JSON.parse(this.localstorage.getItem("user"))
+    const isAuthenticated = !!user // Replace with your authentication logic
 
     if (isAuthenticated) {
       return true // Allow access to the route

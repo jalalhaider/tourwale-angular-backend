@@ -4,25 +4,28 @@ import {
   EventEmitter,
   Output,
   OnInit,
-} from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { AuthService } from "../../auth/auth.service";
-import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
-import { Router } from "@angular/router";
-import { LocalStorageService } from "../localstorage.service";
+} from "@angular/core"
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap"
+import { AuthService } from "../../auth/auth.service"
+import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar"
+import { Router } from "@angular/router"
+import { LocalStorageService } from "../localstorage.service"
 
-declare var $: any;
+declare var $: any
 
 @Component({
   selector: "app-navigation",
   templateUrl: "./navigation.component.html",
 })
 export class NavigationComponent implements AfterViewInit, OnInit {
-  @Output() toggleSidebar = new EventEmitter<void>();
+  @Output() toggleSidebar = new EventEmitter<void>()
 
-  public config: PerfectScrollbarConfigInterface = {};
-  public user: { image: string; name: string } | null = null;
-  public showSearch = false;
+  public config: PerfectScrollbarConfigInterface = {}
+  public user: { image: string; name: string } | null = null
+  public showSearch = false
+
+  public fallbackImageUrl = "assets/images/users/user1.jpg"
+  userImage: string | undefined
 
   constructor(
     private modalService: NgbModal,
@@ -31,11 +34,10 @@ export class NavigationComponent implements AfterViewInit, OnInit {
     private localstorage: LocalStorageService
   ) {}
   ngOnInit(): void {
-    try{
-      this.user = JSON.parse(this.localstorage.getItem("user"));
-    }catch(ex){
-  
-    }
+    try {
+      this.user = JSON.parse(this.localstorage.getItem("user"))
+      this.userImage = this.user?.image
+    } catch (ex) {}
   }
 
   // This is for Notifications
@@ -68,7 +70,7 @@ export class NavigationComponent implements AfterViewInit, OnInit {
       subject: "Just see the my admin!",
       time: "9:00 AM",
     },
-  ];
+  ]
 
   // This is for Mymessages
   mymessages: Object[] = [
@@ -100,14 +102,14 @@ export class NavigationComponent implements AfterViewInit, OnInit {
       subject: "Just see the my admin!",
       time: "9:00 AM",
     },
-  ];
+  ]
 
   public selectedLanguage: any = {
     language: "English",
     code: "en",
     type: "US",
     icon: "us",
-  };
+  }
 
   public languages: any[] = [
     {
@@ -131,12 +133,16 @@ export class NavigationComponent implements AfterViewInit, OnInit {
       code: "de",
       icon: "de",
     },
-  ];
+  ]
 
   ngAfterViewInit() {}
 
+  handleImageError(): void {
+    this.userImage = this.fallbackImageUrl
+  }
+
   logout() {
-    this.authService.logout();
-    this.router.navigateByUrl("/auth/login");
+    this.authService.logout()
+    this.router.navigateByUrl("/auth/login")
   }
 }
