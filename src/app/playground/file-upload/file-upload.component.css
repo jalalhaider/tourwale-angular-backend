@@ -1,0 +1,54 @@
+.drop-zone {
+  height: 200px;
+  border: 3px dashed #019efb3b;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  transition: background-color 0.3s;
+}
+
+.drop-zone:hover {
+  background-color: #019efb08;
+}
+
+.drop-message {
+  font-size: 16px;
+  color: #999;
+}
+
+.drop-message:hover {
+  color: #555;
+  cursor: pointer;
+}
+
+.uploaded-image-wrapper {
+  margin-top: 80px;
+  display: flex;
+}
+.uploaded-image-wrapper-single:hover {
+  position: relative;
+}
+
+.uploaded-image {
+  width: 200px;
+  padding: 5px;
+  border: 10px solid #fff;
+  border-radius: 2px;
+}
+.uploaded-image-wrapper-single:hover .uploaded-image {
+  opacity: 0.5;
+
+  transition: all 0.3s;
+}
+.delete-btn {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  visibility: hidden;
+}
+.uploaded-image-wrapper-single:hover .delete-btn {
+  visibility: visible;
+}

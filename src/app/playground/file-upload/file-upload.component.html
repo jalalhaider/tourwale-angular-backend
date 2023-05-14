@@ -1,0 +1,10 @@
+<div class="drop-zone" (drop)="onDrop($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
+  <span class="drop-message">Drag and drop files here or click to browse</span>
+</div>
+
+<div class="uploaded-image-wrapper">
+  <div class="uploaded-image-wrapper-single" *ngFor="let img of files">
+    <img class="uploaded-image" src="http://localhost:4100{{ img.resourcePath }}" alt="" />
+    <button class="delete-btn" (click)="onDelete(img)">Delete</button>
+  </div>
+</div>
