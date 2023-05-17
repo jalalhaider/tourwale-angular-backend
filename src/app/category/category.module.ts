@@ -5,7 +5,6 @@ import { RouterModule } from "@angular/router"
 import { routes } from "./category.routing"
 import { ReactiveFormsModule } from "@angular/forms"
 import { CommonModule } from "@angular/common"
-import { HttpClientModule } from "@angular/common/http"
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap"
 import { ComponentsModule } from "../component/component.module"
 import { ListComponent } from "./list/list.component"
@@ -16,7 +15,6 @@ import { UpdateComponent } from "./update/update.component"
     ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(routes),
-    HttpClientModule,
     ComponentsModule,
     NgbModule,
   ],

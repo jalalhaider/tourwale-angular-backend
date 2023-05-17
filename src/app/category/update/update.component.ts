@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute, Router } from "@angular/router"
-import { ToastService } from "../../shared/toast.service"
+import { ToastService } from "../../shared/services/toast.service"
 
 import { CategoryService } from "../category.service"
 import { Category } from "../models"

@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
-import { Router } from "@angular/router";
-import { ToastService } from "../../shared/toast.service";
-import { Agency } from "../models";
-import { AgencyService } from "../agency.service";
+import { Component, OnInit } from "@angular/core"
+import { FormControl } from "@angular/forms"
+import { Router } from "@angular/router"
+import { ToastService } from "../../shared/services/toast.service"
+import { Agency } from "../models"
+import { AgencyService } from "../agency.service"
 
 @Component({
   selector: "app-agency",
@@ -11,8 +11,8 @@ import { AgencyService } from "../agency.service";
   styles: [],
 })
 export class CreateComponent implements OnInit {
-  formType = "Create";
-  isLoading = false;
+  formType = "Create"
+  isLoading = false
   constructor(
     private toastService: ToastService,
     private agencyService: AgencyService,
@@ -21,11 +21,11 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(dto: Agency) {
-    this.isLoading = !this.isLoading;
+    this.isLoading = !this.isLoading
     this.agencyService.create(dto).subscribe((agency) => {
-      this.isLoading = !this.isLoading;
-      this.router.navigateByUrl(`/agency/list`);
-      this.toastService.showSuccessToast("Success", "Agency Added");
-    });
+      this.isLoading = !this.isLoading
+      this.router.navigateByUrl(`/agency/list`)
+      this.toastService.showSuccessToast("Success", "Agency Added")
+    })
   }
 }

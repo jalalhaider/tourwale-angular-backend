@@ -6,7 +6,7 @@ import {
   UrlTree,
   Router,
 } from "@angular/router"
-import { LocalStorageService } from "../shared/localstorage.service"
+import { LocalStorageService } from "../shared/services/localstorage.service"
 
 @Injectable({
   providedIn: "root",

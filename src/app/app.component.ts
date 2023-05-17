@@ -9,14 +9,11 @@ import { Router } from "@angular/router"
 export class AppComponent implements OnInit {
   title = "app"
 
-  constructor(private router: Router) {
-    console.log("SAd")
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     // This code will be executed when the component initializes
-    console.log("Component initialized")
-    this.router.navigateByUrl("/dashboard")
+    //this.router.navigateByUrl("/dashboard")
     // You can perform initialization tasks here, such as fetching data from a server, subscribing to observables, etc.
   }
 }

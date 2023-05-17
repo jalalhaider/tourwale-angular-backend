@@ -8,7 +8,7 @@ import {
 } from "@angular/forms"
 import { EventEmitter } from "@angular/core"
 import { Agency, AgencyDescription } from "../models"
-import { ToastService } from "../../shared/toast.service"
+import { ToastService } from "../../shared/services/toast.service"
 
 @Component({
   selector: "app-agency-form",

@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
-import { Router } from "@angular/router";
-import { ToastService } from "../../shared/toast.service";
-import { User } from "../models";
-import { UserService } from "../user.service";
+import { Component, OnInit } from "@angular/core"
+import { FormControl } from "@angular/forms"
+import { Router } from "@angular/router"
+import { ToastService } from "../../shared/services/toast.service"
+import { User } from "../models"
+import { UserService } from "../user.service"
 
 @Component({
   selector: "app-user",
@@ -11,8 +11,8 @@ import { UserService } from "../user.service";
   styles: [],
 })
 export class CreateComponent implements OnInit {
-  formType = "Create";
-  isLoading = false;
+  formType = "Create"
+  isLoading = false
   constructor(
     private toastService: ToastService,
     private userService: UserService,
@@ -21,18 +21,18 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(dto: User) {
-    this.isLoading = !this.isLoading;
+    this.isLoading = !this.isLoading
     this.userService.create(dto).subscribe({
       next: this.handleResponse.bind(this),
       error: (err) => {
-        this.isLoading = !this.isLoading;
-        this.toastService.showErrorToast("Failed", err.message);
+        this.isLoading = !this.isLoading
+        this.toastService.showErrorToast("Failed", err.message)
       },
-    });
+    })
   }
   handleResponse(user: any) {
-    this.isLoading = !this.isLoading;
-    this.router.navigateByUrl(`/user/list`);
-    this.toastService.showSuccessToast("Success", "User Added");
+    this.isLoading = !this.isLoading
+    this.router.navigateByUrl(`/user/list`)
+    this.toastService.showSuccessToast("Success", "User Added")
   }
 }

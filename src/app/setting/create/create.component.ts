@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
-import { Router } from "@angular/router";
-import { ToastService } from "../../shared/toast.service";
-import { Setting } from "../models";
-import { SettingService } from "../setting.service";
+import { Component, OnInit } from "@angular/core"
+import { FormControl } from "@angular/forms"
+import { Router } from "@angular/router"
+import { ToastService } from "../../shared/services/toast.service"
+import { Setting } from "../models"
+import { SettingService } from "../setting.service"
 
 @Component({
   selector: "app-setting",
@@ -11,8 +11,8 @@ import { SettingService } from "../setting.service";
   styles: [],
 })
 export class CreateComponent implements OnInit {
-  formType = "Create";
-  isLoading = false;
+  formType = "Create"
+  isLoading = false
   constructor(
     private toastService: ToastService,
     private settingService: SettingService,
@@ -21,11 +21,11 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(dto: Setting) {
-    this.isLoading = !this.isLoading;
+    this.isLoading = !this.isLoading
     this.settingService.create(dto).subscribe((setting) => {
-      this.isLoading = !this.isLoading;
-      this.router.navigateByUrl(`/setting/list`);
-      this.toastService.showSuccessToast("Success", "Setting Added");
-    });
+      this.isLoading = !this.isLoading
+      this.router.navigateByUrl(`/setting/list`)
+      this.toastService.showSuccessToast("Success", "Setting Added")
+    })
   }
 }

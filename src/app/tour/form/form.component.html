@@ -1,0 +1,94 @@
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
+  <div class="card-body">
+    <h2 class="">Tour</h2>
+    <p>Create your amazing Tour</p>
+
+    <ngb-alert *ngIf="errors.length > 0" [type]="'danger'" [dismissible]="true" class="customize-alert fs-5">
+      <div *ngFor="let error of errors">{{ error.field }} : {{ error.message }}</div>
+    </ngb-alert>
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <div class="mb-3">
+          <label for="name-input" class="form-label"><sup style="color: red">*</sup> Name </label>
+          <input id="name-input" type="text" class="form-control" placeholder="Enter Name" formControlName="name" />
+          <span style="color: red" *ngIf="!form.get('name')?.valid && form.get('name')?.touched">Name is required</span>
+        </div>
+
+        <div class="mb-3">
+          <label for="overview-input" class="form-label"><sup style="color: red">*</sup> Overview </label>
+          <input id="overview-input" type="text" class="form-control" placeholder="Enter Overview" formControlOverview="overview" />
+          <span style="color: red" *ngIf="!form.get('overview')?.valid && form.get('overview')?.touched">Overview is required</span>
+        </div>
+
+        <div class="mb-3">
+          <label for="languages-input" class="form-label"><sup style="color: red">*</sup> Languages </label>
+          <input id="languages-input" type="text" class="form-control" placeholder="Enter Languages" formControlLanguages="languages" />
+          <span style="color: red" *ngIf="!form.get('languages')?.valid && form.get('languages')?.touched">Languages is required</span>
+        </div>
+
+        <div class="mb-3">
+          <label for="highlights-input" class="form-label"><sup style="color: red">*</sup> Highlights </label>
+          <input id="highlights-input" type="text" class="form-control" placeholder="Enter Highlights" formControlHighlights="highlights" />
+          <span style="color: red" *ngIf="!form.get('highlights')?.valid && form.get('highlights')?.touched">Highlights is required</span>
+        </div>
+
+        <div class="mb-3">
+          <label for="featured_image-input" class="form-label"><sup style="color: red">*</sup> Featured Image </label>
+          <input id="featured_image-input" type="text" class="form-control" placeholder="Enter Featured Image" formControlFeatured Image="featured_image" />
+          <span style="color: red" *ngIf="!form.get('featured_image')?.valid && form.get('featured_image')?.touched">Featured Image is required</span>
+        </div>
+
+        <div class="mb-3">
+          <label for="included-input" class="form-label"><sup style="color: red">*</sup> Included </label>
+          <input id="included-input" type="text" class="form-control" placeholder="Enter Included" formControlIncluded="included" />
+          <span style="color: red" *ngIf="!form.get('included')?.valid && form.get('included')?.touched">Included is required</span>
+        </div>
+
+        <div class="mb-3">
+          <label for="excluded-input" class="form-label"><sup style="color: red">*</sup> Excluded </label>
+          <input id="excluded-input" type="text" class="form-control" placeholder="Enter Excluded" formControlExcluded="excluded" />
+          <span style="color: red" *ngIf="!form.get('excluded')?.valid && form.get('excluded')?.touched">Excluded is required</span>
+        </div>
+        <div class="mb-3">
+          <label for="departure_details-input" class="form-label"><sup style="color: red">*</sup> Departure Details </label>
+          <input id="departure_details-input" type="text" class="form-control" placeholder="Enter Departure Details" formControlDeparture Details="departure_details" />
+          <span style="color: red" *ngIf="!form.get('departure_details')?.valid && form.get('departure_details')?.touched">Departure Details is required</span>
+        </div>
+
+        <div class="mb-3">
+          <label for="know_before-input" class="form-label"><sup style="color: red">*</sup> Know Before </label>
+          <input id="know_before-input" type="text" class="form-control" placeholder="Enter Know Before" formControlKnow Before="know_before" />
+          <span style="color: red" *ngIf="!form.get('know_before')?.valid && form.get('know_before')?.touched">Know Before is required</span>
+        </div>
+
+        <div class="mb-3">
+          <label for="additional_info-input" class="form-label"><sup style="color: red">*</sup> Additional Info </label>
+          <input id="additional_info-input" type="text" class="form-control" placeholder="Enter Additional Info" formControlAdditional Info="additional_info" />
+          <span style="color: red" *ngIf="!form.get('additional_info')?.valid && form.get('additional_info')?.touched">Additional Info is required</span>
+        </div>
+
+        <div class="mb-3">
+          <label for="duration-input" class="form-label"><sup style="color: red">*</sup> Duration </label>
+          <input id="duration-input" type="text" class="form-control" placeholder="Enter Duration" formControlDuration="duration" />
+          <span style="color: red" *ngIf="!form.get('duration')?.valid && form.get('duration')?.touched">Duration is required</span>
+        </div>
+
+        <div class="mb-3">
+          <label for="active-input" class="form-label"><sup style="color: red">*</sup> Is Active </label>
+          <div class="form-check form-switch">
+            <input id="active-input" class="form-check-input cursor-pointer" type="checkbox" formControlName="isActive" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 align-self-end">
+        <button class="btn btn-info" type="submit">
+          <i class="bi bi-save"></i>
+          <span> Save</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

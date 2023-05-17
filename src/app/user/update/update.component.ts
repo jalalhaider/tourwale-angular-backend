@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { ToastService } from "../../shared/toast.service";
-import { User } from "../models";
-import { UserService } from "../user.service";
+import { Component, OnInit } from "@angular/core"
+import { ActivatedRoute, Router } from "@angular/router"
+import { ToastService } from "../../shared/services/toast.service"
+import { User } from "../models"
+import { UserService } from "../user.service"
 
 @Component({
   selector: "app-user",
@@ -10,10 +10,10 @@ import { UserService } from "../user.service";
   styles: [],
 })
 export class UpdateComponent implements OnInit {
-  isLoading: boolean = true;
-  formType = "Update";
-  user_id = 0;
-  data: User = {};
+  isLoading: boolean = true
+  formType = "Update"
+  user_id = 0
+  data: User = {}
 
   constructor(
     private toastService: ToastService,
@@ -23,36 +23,36 @@ export class UpdateComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.user_id = params["user_id"];
-      this.getUser();
-    });
+      this.user_id = params["user_id"]
+      this.getUser()
+    })
   }
 
   getUser() {
     this.userSerivce.get(this.user_id).subscribe({
       next: (res) => {
-        this.data = res;
+        this.data = res
       },
       error: (err) => {
-        this.toastService.showErrorToast("Failed", err.message);
+        this.toastService.showErrorToast("Failed", err.message)
       },
-    });
-    this.isLoading = !this.isLoading;
+    })
+    this.isLoading = !this.isLoading
   }
 
   onSubmit(dto: User) {
-    this.isLoading = !this.isLoading;
+    this.isLoading = !this.isLoading
     this.userSerivce.update(this.user_id, dto).subscribe({
       next: (user) => {
-        console.log("User Updated on Server", user);
+        console.log("User Updated on Server", user)
 
-        this.toastService.showSuccessToast("Success", "User Updated");
-        this.router.navigateByUrl(`/user/list`);
+        this.toastService.showSuccessToast("Success", "User Updated")
+        this.router.navigateByUrl(`/user/list`)
       },
       error: (err) => {
-        this.toastService.showErrorToast("Failed", err.message);
-        this.isLoading = !this.isLoading;
+        this.toastService.showErrorToast("Failed", err.message)
+        this.isLoading = !this.isLoading
       },
-    });
+    })
   }
 }

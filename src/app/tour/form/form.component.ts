@@ -1,39 +1,61 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core"
-import { Category } from "../models/category.models"
+import { Tour } from "../models/tour.models"
 import { FormBuilder, ValidationErrors, Validators } from "@angular/forms"
 import { ToastService } from "../../shared/services/toast.service"
 
 @Component({
-  selector: "app-category-form",
+  selector: "app-tour-form",
   templateUrl: "./form.component.html",
 })
 export class FormComponent {
-  @Input() formType: string = ""
-  @Input() data: Category = {}
+  @Input() formType!: string
+  @Input() data!: Tour
   @Input() isLoading: boolean = false
-  @Output() onSubmit = new EventEmitter<Category>()
+  @Output() onSubmit = new EventEmitter<Tour>()
 
   errors: any[] = []
 
   form = this.fb.group({
-    title: ["", Validators.required],
-    description: [""],
-    image: [""],
-    isActive: [false],
+    agencyId: [],
+    categoryId: [],
+    name: [],
+    overview: [],
+    languages: [],
+    highlights: [],
+    featured_image: [],
+    included: [],
+    excluded: [],
+    departure_details: [],
+    know_before: [],
+    additional_info: [],
+    duration: [],
+    start_date: [], //2023-05-07T09:18:15.871Z;
+    end_date: [],
+    cancellation_policy: [],
+    pickup_location_id: [],
+    requirements: [],
+    slug: [],
+    basePrice: [],
+    is_custom_tour: [],
+    is_draft: [],
+    around_location: [],
+    recurring_type: [],
+    isActive: [],
   })
 
   constructor(private fb: FormBuilder, private toastService: ToastService) {}
 
   ngOnInit(): void {}
+
   ngOnChanges() {
-    if (!Object.keys(this.data).length) return
+    /*  if (!Object.keys(this.data).length) return
 
     this.form.patchValue({
       title: this.data.title,
       description: this.data.description,
       image: this.data.image,
       isActive: this.data.isActive,
-    })
+    }) */
   }
 
   handleSubmit(): void {

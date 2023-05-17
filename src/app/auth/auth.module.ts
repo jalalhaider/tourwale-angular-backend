@@ -6,8 +6,8 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap"
 import { ComponentsModule } from "../component/component.module"
 import { routes } from "./auth.routing"
 import { AuthService } from "./auth.service"
-import { AuthInterceptor } from "./interceptors/request.interceptor"
 import { LoginComponent } from "./login/login.component"
+import { HTTP_INTERCEPTORS } from "@angular/common/http"
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import { LoginComponent } from "./login/login.component"
     ComponentsModule,
     NgbModule,
   ],
-  providers: [AuthService, AuthInterceptor],
+  providers: [AuthService],
   declarations: [LoginComponent],
 })
 export class AuthModule {}

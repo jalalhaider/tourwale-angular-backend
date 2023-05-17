@@ -3,9 +3,9 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
-} from "@angular/core";
-import { ToastEvent } from "./models";
-import { ToastService } from "../../shared/toast.service";
+} from "@angular/core"
+import { ToastEvent } from "./models"
+import { ToastService } from "../../shared/services/toast.service"
 
 @Component({
   selector: "app-toaster",
@@ -14,7 +14,7 @@ import { ToastService } from "../../shared/toast.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToasterComponent implements OnInit {
-  currentToasts: ToastEvent[] = [];
+  currentToasts: ToastEvent[] = []
 
   constructor(
     private toastService: ToastService,
@@ -22,7 +22,7 @@ export class ToasterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.subscribeToToasts();
+    this.subscribeToToasts()
   }
 
   subscribeToToasts() {
@@ -31,14 +31,14 @@ export class ToasterComponent implements OnInit {
         type: toasts.type,
         title: toasts.title,
         message: toasts.message,
-      };
-      this.currentToasts.push(currentToast);
-      this.cdr.detectChanges();
-    });
+      }
+      this.currentToasts.push(currentToast)
+      this.cdr.detectChanges()
+    })
   }
 
   dispose(index: number) {
-    this.currentToasts.splice(index, 1);
-    this.cdr.detectChanges();
+    this.currentToasts.splice(index, 1)
+    this.cdr.detectChanges()
   }
 }

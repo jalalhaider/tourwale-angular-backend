@@ -9,7 +9,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap"
 import { AuthService } from "../../auth/auth.service"
 import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar"
 import { Router } from "@angular/router"
-import { LocalStorageService } from "../localstorage.service"
+import { LocalStorageService } from "../services/localstorage.service"
 
 declare var $: any
 

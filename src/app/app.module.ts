@@ -7,7 +7,11 @@ import {
 } from "@angular/common"
 import { NgModule } from "@angular/core"
 import { FormsModule, ReactiveFormsModule } from "@angular/forms"
-import { HttpClientModule, HttpClient } from "@angular/common/http"
+import {
+  HttpClientModule,
+  HttpClient,
+  HTTP_INTERCEPTORS,
+} from "@angular/common/http"
 import { Routes, RouterModule } from "@angular/router"
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap"
@@ -26,10 +30,11 @@ import { PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar"
 import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar"
 import { AuthComponent } from "./layouts/auth/auth.component"
 import { ComponentsModule } from "./component/component.module"
-import { ToastService } from "./shared/toast.service"
-import { LocalStorageService } from "./shared/localstorage.service"
-import { UtilService } from "./shared/util.service"
+import { ToastService } from "./shared/services/toast.service"
+import { LocalStorageService } from "./shared/services/localstorage.service"
+import { UtilService } from "./shared/services/util.service"
 import { AuthGuard } from "./guards/auth.guard"
+import { RequestInterceptor } from "./shared/interceptors"
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -74,6 +79,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

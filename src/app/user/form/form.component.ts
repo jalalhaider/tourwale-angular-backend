@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, Output } from "@angular/core";
-import { FormBuilder, ValidationErrors, Validators } from "@angular/forms";
-import { EventEmitter } from "@angular/core";
-import { User } from "../models";
-import { UtilService } from "../../shared/util.service";
-import { environment } from "../../../environments/environment";
+import { Component, Input, OnInit, Output } from "@angular/core"
+import { FormBuilder, ValidationErrors, Validators } from "@angular/forms"
+import { EventEmitter } from "@angular/core"
+import { User } from "../models"
+import { UtilService } from "../../shared/services/util.service"
+import { environment } from "../../../environments/environment"
 
 @Component({
   selector: "app-user-form",
@@ -11,13 +11,13 @@ import { environment } from "../../../environments/environment";
   styleUrls: ["./form.component.css"],
 })
 export class FormComponent implements OnInit {
-  @Input() formType: string = "";
-  @Input() data: User = {};
-  @Input() isLoading: boolean = false;
-  @Output() onSubmit = new EventEmitter<any>();
+  @Input() formType: string = ""
+  @Input() data: User = {}
+  @Input() isLoading: boolean = false
+  @Output() onSubmit = new EventEmitter<any>()
 
-  errors: any[] = [];
-  imageSrc: string = "assets/images/users/user1.jpg";
+  errors: any[] = []
+  imageSrc: string = "assets/images/users/user1.jpg"
   form = this.fb.group({
     name: ["", Validators.required],
     image: [""],
@@ -26,7 +26,7 @@ export class FormComponent implements OnInit {
     username: ["", Validators.required],
     phone: ["", Validators.required],
     gender: [""],
-  });
+  })
 
   constructor(private fb: FormBuilder, private utilService: UtilService) {}
 
@@ -35,10 +35,10 @@ export class FormComponent implements OnInit {
   ngOnChanges() {
     this.form.patchValue({
       ...this.data,
-    });
+    })
 
     if (this.data.image !== "" && this.data.image != undefined) {
-      this.imageSrc = `${this.data.image}`;
+      this.imageSrc = `${this.data.image}`
     }
   }
 
@@ -47,41 +47,41 @@ export class FormComponent implements OnInit {
     if (this.form.valid) {
       const dto: any = {
         ...this.form.value,
-      };
+      }
 
-      this.onSubmit.emit(this.utilService.toFormData(dto));
+      this.onSubmit.emit(this.utilService.toFormData(dto))
     } else {
-      this.getFormValidationErrors();
+      this.getFormValidationErrors()
     }
   }
 
   getFormValidationErrors() {
     Object.keys(this.form.controls).forEach((key) => {
-      const controlErrors: ValidationErrors = this.form.get(key)?.errors || [];
+      const controlErrors: ValidationErrors = this.form.get(key)?.errors || []
       if (controlErrors != null) {
         Object.keys(controlErrors).forEach((keyError) => {
           this.errors.push({
             field: key,
             message: keyError,
-          });
-          console.log(controlErrors[keyError]);
-        });
+          })
+          console.log(controlErrors[keyError])
+        })
       }
-    });
+    })
   }
 
   onFileChange(event: any) {
-    const reader = new FileReader();
+    const reader = new FileReader()
 
     if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      console.log("file", file);
-      reader.readAsDataURL(file);
+      const [file] = event.target.files
+      console.log("file", file)
+      reader.readAsDataURL(file)
 
       reader.onload = () => {
-        this.imageSrc = reader.result as string;
-        this.form.controls.image.setValue(file);
-      };
+        this.imageSrc = reader.result as string
+        this.form.controls.image.setValue(file)
+      }
     }
   }
 }

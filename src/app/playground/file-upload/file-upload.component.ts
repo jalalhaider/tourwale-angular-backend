@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http"
 import { Component } from "@angular/core"
-import { UtilService } from "../../shared/util.service"
+import { UtilService } from "../../shared/services/util.service"
 
 const example = [
   {
