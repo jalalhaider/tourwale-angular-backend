@@ -35,6 +35,7 @@ import { LocalStorageService } from "./shared/services/localstorage.service"
 import { UtilService } from "./shared/services/util.service"
 import { AuthGuard } from "./guards/auth.guard"
 import { RequestInterceptor } from "./shared/interceptors"
+import { QuillModule } from "ngx-quill"
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -53,6 +54,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AuthComponent,
   ],
   imports: [
+    QuillModule.forRoot(),
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,

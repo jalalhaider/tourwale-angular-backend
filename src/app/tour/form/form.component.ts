@@ -13,6 +13,32 @@ export class FormComponent {
   @Input() isLoading: boolean = false
   @Output() onSubmit = new EventEmitter<Tour>()
 
+  imageSrc: string = "assets/images/bg/bg1_1_50.jpg"
+
+  modules = {
+    toolbar: [
+      ["bold", "italic", "underline", "strike"], // toggled buttons
+      ["blockquote", "code-block"],
+
+      [{ header: 1 }, { header: 2 }], // custom button values
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ script: "sub" }, { script: "super" }], // superscript/subscript
+      [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+      [{ direction: "rtl" }], // text direction
+
+      [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+      [{ font: [] }],
+      [{ align: [] }],
+
+      ["clean"], // remove formatting button
+
+      ["link"], // link and image, video
+    ],
+  }
+
   errors: any[] = []
 
   form = this.fb.group({
@@ -43,8 +69,26 @@ export class FormComponent {
     isActive: [],
   })
 
+  onContentChanged(data: any, field: string) {
+    this.form.patchValue({ [field]: data.html })
+  }
+
   constructor(private fb: FormBuilder, private toastService: ToastService) {}
 
+  onFileChange(event: any) {
+    const reader = new FileReader()
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files
+      console.log("file", file)
+      reader.readAsDataURL(file)
+
+      reader.onload = () => {
+        this.imageSrc = reader.result as string
+        this.form.controls.featured_image.setValue(file)
+      }
+    }
+  }
   ngOnInit(): void {}
 
   ngOnChanges() {
@@ -64,7 +108,8 @@ export class FormComponent {
       const dto: any = {
         ...this.form.value,
       }
-      this.onSubmit.emit(dto)
+      console.log("dto", dto)
+      //this.onSubmit.emit(dto)
     } else {
       this.getFormValidationErrors()
       this.toastService.showErrorToast("Failed", "Invalid Form")

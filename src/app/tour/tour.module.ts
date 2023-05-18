@@ -9,9 +9,10 @@ import { CommonModule } from "@angular/common"
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap"
 import { FormComponent } from "./form/form.component"
 import { TourService } from "./tour.service"
-
+import { QuillModule } from "ngx-quill"
 @NgModule({
   imports: [
+    QuillModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
