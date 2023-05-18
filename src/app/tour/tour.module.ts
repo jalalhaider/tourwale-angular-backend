@@ -10,6 +10,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap"
 import { FormComponent } from "./form/form.component"
 import { TourService } from "./tour.service"
 import { QuillModule } from "ngx-quill"
+import { FileUploadComponent } from "./components/file-upload/file-upload.component"
 @NgModule({
   imports: [
     QuillModule.forRoot(),
@@ -20,7 +21,12 @@ import { QuillModule } from "ngx-quill"
     ComponentsModule,
     NgbModule,
   ],
-  declarations: [CreateComponent, ListComponent, FormComponent],
+  declarations: [
+    CreateComponent,
+    ListComponent,
+    FormComponent,
+    FileUploadComponent,
+  ],
   providers: [TourService],
 })
 export class TourModule {}

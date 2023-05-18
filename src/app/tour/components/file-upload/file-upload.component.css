@@ -1,0 +1,64 @@
+.drop-zone {
+  height: 200px;
+  border: 3px dashed #019efb3b;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  transition: background-color 0.3s;
+}
+
+.drop-zone:hover {
+  background-color: #c4e9ff;
+}
+
+.blueBg {
+  background-color: #c4e9ff !important;
+}
+
+.drop-message {
+  font-size: 16px;
+  color: #999;
+}
+.blueBg > .drop-message,
+.drop-zone:hover > .drop-message {
+  color: white !important;
+}
+.drop-message:hover {
+  color: #555;
+  cursor: pointer;
+}
+
+.uploaded-image-wrapper {
+  margin-top: 20px;
+}
+
+.uploaded-image-wrapper-single {
+  overflow: hidden;
+  width: 100%;
+  border: 5px solid rgb(255, 255, 255);
+  height: 150px;
+}
+.uploaded-image-wrapper-single:hover {
+  position: relative;
+}
+
+.uploaded-image {
+  width: 200px;
+}
+.uploaded-image-wrapper-single:hover .uploaded-image {
+  opacity: 0.5;
+
+  transition: all 0.3s;
+}
+.delete-btn {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  visibility: hidden;
+}
+.uploaded-image-wrapper-single:hover .delete-btn {
+  visibility: visible;
+}

@@ -10,7 +10,7 @@
     <nav>
       <div class="nav nav-tabs" id="language-tab" role="tablist">
         <button class="nav-link active" id="nav-general-tab" data-bs-toggle="tab" data-bs-target="#nav-general" type="button" role="tab" aria-controls="nav-general" aria-selected="true">General</button>
-        <button class="nav-link" id="nav-editors-tab" data-bs-toggle="tab" data-bs-target="#nav-editors" type="button" role="tab" aria-controls="nav-editors" aria-selected="false">Editors</button>
+        <button class="nav-link" id="nav-editors-tab" data-bs-toggle="tab" data-bs-target="#nav-editors" type="button" role="tab" aria-controls="nav-editors" aria-selected="false">Information</button>
         <button class="nav-link" id="nav-images-tab" data-bs-toggle="tab" data-bs-target="#nav-images" type="button" role="tab" aria-controls="nav-images" aria-selected="false">Images</button>
       </div>
     </nav>
@@ -24,7 +24,7 @@
                 <img id="frame" width="100%" [src]="imageSrc" class="image" alt="avatar" />
               </div>
               <br />
-              <label for="exampleFormControlInput1" class="form-label"><sup style="color: red">*</sup> Image </label>
+              <label for="exampleFormControlInput1" class="form-label"><sup style="color: red">*</sup> Upload Featured Image </label>
               <input type="file" class="form-control" placeholder="Enter Image" (change)="onFileChange($event)" />
               <span style="color: red" *ngIf="!form.get('image')?.valid && form.get('image')?.touched">image is required</span>
             </div>
@@ -211,7 +211,9 @@
           </div>
         </div>
       </div>
-      <div class="tab-pane fade" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab"></div>
+      <div class="tab-pane fade" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
+        <app-file-upload></app-file-upload>
+      </div>
     </div>
   </div>
 </form>

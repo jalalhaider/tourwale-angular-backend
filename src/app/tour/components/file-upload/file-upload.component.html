@@ -1,0 +1,18 @@
+<div class="drop-zone" [class.blueBg]="onHover" (drop)="onDrop($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
+  <span class="drop-message">Drag and drop files here or click to browse</span>
+</div>
+<br />
+<h5>Uploaded images</h5>
+<div class="uploaded-image-wrapper">
+  <div class="row">
+    <div class="col-sm-12" *ngIf="!files.length">
+      <p class="text-center">No Images</p>
+    </div>
+    <div class="col-sm-2" *ngFor="let img of files">
+      <div class="uploaded-image-wrapper-single">
+        <img class="uploaded-image" src="http://localhost:4100{{ img.resourcePath }}" alt="" />
+        <button class="delete-btn" (click)="onDelete(img)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
