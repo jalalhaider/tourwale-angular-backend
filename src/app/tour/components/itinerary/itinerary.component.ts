@@ -14,6 +14,7 @@ import { environment } from "../../../../environments/environment"
   templateUrl: "./itinerary.component.html",
 })
 export class ItineraryComponent {
+  tourId = 1
   listLoading = false
   detailLoading = false
   editorContent = ""
@@ -70,7 +71,7 @@ export class ItineraryComponent {
   ) {}
 
   ngOnInit(): void {
-    this.form.controls.tourId.setValue(3)
+    this.form.controls.tourId.setValue(this.tourId)
     this.getItinerary()
     this.getCategories()
     this.getLocations()
@@ -99,7 +100,7 @@ export class ItineraryComponent {
   }
 
   getItinerary() {
-    const where = { tourId: 3 }
+    const where = { tourId: this.tourId }
     this.listLoading = true
     this.itinerary.getList(where).subscribe((response) => {
       this.list = response
@@ -129,6 +130,24 @@ export class ItineraryComponent {
     }
   }
 
+  newForm() {
+    this.isEdit = false
+    this.form.patchValue({
+      tourId: this.tourId,
+      sortOrder: 0,
+      locationId: 0,
+      categoryId: 0,
+      name: "",
+      description: "",
+      featuredImage: "",
+      time: "",
+      date: "",
+    })
+    this.editorContent = ""
+    this.time = { hour: 0, minute: 0 }
+    this.date = { year: 2023, month: 1, day: 1 }
+    this.imageSrc = "assets/images/bg/bg1_1_50.jpg"
+  }
   handleEdit(tourId: number, sortOrder: number) {
     this.detailLoading = true
     this.itinerary.get(tourId, sortOrder).subscribe((response: any) => {
@@ -179,7 +198,7 @@ export class ItineraryComponent {
         const mediadto = {
           sortOrder: 0,
           mediaType: "image",
-          entityId: 3,
+          entityId: this.tourId,
           entity: "itinerary",
           altTag: "Featured Image",
           isActive: true,
@@ -214,6 +233,7 @@ export class ItineraryComponent {
             next: (response) => {
               this.toastService.showSuccessToast("Success", "Itinerary Updated")
               this.getItinerary()
+              this.newForm()
             },
             error: (error) => this.toastService.showErrorToast("Failed", error),
           })
@@ -222,6 +242,7 @@ export class ItineraryComponent {
           next: (response) => {
             this.toastService.showSuccessToast("Success", "Itinerary Created")
             this.getItinerary()
+            this.newForm()
           },
           error: (error) => this.toastService.showErrorToast("Failed", error),
         })

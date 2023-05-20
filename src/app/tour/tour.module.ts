@@ -15,6 +15,7 @@ import { ItineraryComponent } from "./components/itinerary/itinerary.component"
 import { GeneralComponent } from "./components/general/general.component"
 import { InformationComponent } from "./components/information/information.component"
 import { ItineraryService } from "./itinerary.service"
+import { UpdateComponent } from "./update/update.component"
 @NgModule({
   imports: [
     QuillModule.forRoot(),
@@ -28,6 +29,7 @@ import { ItineraryService } from "./itinerary.service"
   declarations: [
     CreateComponent,
     ListComponent,
+    UpdateComponent,
     FormComponent,
     FileUploadComponent,
     ItineraryComponent,

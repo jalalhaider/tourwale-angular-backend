@@ -1,0 +1,154 @@
+<form [formGroup]="form" (ngSubmit)="handleSave()">
+  <div class="row">
+    <div class="col-sm-12 col-md-3">
+      <div class="mb-3">
+        <div class="image-container">
+          <img id="frame" width="100%" [src]="imageSrc" class="image" alt="avatar" />
+        </div>
+        <br />
+        <label class="form-label"><sup class="required">*</sup> Upload Featured Image </label>
+        <input type="file" class="form-control" placeholder="Enter Image" (change)="onFileChange($event)" />
+        <span class="required" *ngIf="isValid('feature_image')">Image is required</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label"><sup class="required">*</sup> Start Date </label>
+
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" [startDate]="startDate" name="dp" ngbDatepicker #sd="ngbDatepicker" formControlName="start_date" />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="sd.toggle()" type="button">Select</button>
+          </div>
+        </div>
+        <span class="required" *ngIf="isValid('start_date')">End Date is required</span>
+      </div>
+      <span class="required" *ngIf="isValid('start_date')">Start Date is required</span>
+      <div class="mb-3">
+        <label for="name-input" class="form-label"><sup class="required">*</sup> End Date </label>
+
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" [startDate]="endDate" name="dp" ngbDatepicker #ed="ngbDatepicker" formControlName="end_date" />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="ed.toggle()" type="button">Select</button>
+          </div>
+        </div>
+        <span class="required" *ngIf="isValid('end_date')">End Date is required</span>
+      </div>
+
+      <div class="mb-3">
+        <div class="form-check form-switch">
+          <input id="active-input" class="form-check-input cursor-pointer" type="checkbox" formControlName="is_draft" />
+          <label for="active-input" class="form-label"><sup class="required">*</sup> Is Draft </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="form-check form-switch">
+          <label for="active-input" class="form-label"><sup class="required">*</sup> Is Custom Tour </label>
+          <input id="active-input" class="form-check-input cursor-pointer" type="checkbox" formControlName="is_custom_tour" />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="form-check form-switch">
+          <label for="active-input" class="form-label"><sup class="required">*</sup> Is Active </label>
+          <input id="active-input" class="form-check-input cursor-pointer" type="checkbox" formControlName="isActive" />
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <div class="mb-3">
+        <label for="name-input" class="form-label"><sup class="required">*</sup> Name </label>
+        <input id="name-input" type="text" class="form-control" placeholder="Enter Name" formControlName="name" />
+        <span class="required" *ngIf="isValid('name')">Name is required</span>
+      </div>
+
+      <div class="mb-3">
+        <label for="overview-input" class="form-label"><sup class="required">*</sup> Overview </label>
+        <input id="overview-input" type="text" class="form-control" placeholder="Enter Overview" formControlName="overview" />
+        <span class="required" *ngIf="isValid('overview')">Overview is required</span>
+      </div>
+
+      <div class="mb-3">
+        <label for="highlights-input" class="form-label"><sup class="required">*</sup> Highlights </label>
+        <input id="highlights-input" type="text" class="form-control" placeholder="Enter Highlights" formControlName="highlights" />
+        <span class="required" *ngIf="isValid('highlights')">Highlights is required</span>
+      </div>
+
+      <div class="mb-3">
+        <label for="languages-input" class="form-label"><sup class="required">*</sup> Languages </label>
+        <input id="languages-input" type="text" class="form-control" placeholder="Enter Languages" formControlName="languages" />
+        <span class="required" *ngIf="isValid('languages')">Languages is required</span>
+      </div>
+
+      <div class="mb-3">
+        <label for="departure_details-input" class="form-label"><sup class="required">*</sup> Departure Details </label>
+        <input id="departure_details-input" type="text" class="form-control" placeholder="Enter Departure Details" formControlName="departure_details" />
+        <span class="required" *ngIf="isValid('departure_details')">Departure Details is required</span>
+      </div>
+
+      <div class="mb-3">
+        <label for="duration-input" class="form-label"><sup class="required">*</sup> Duration </label>
+        <input id="duration-input" type="text" class="form-control" placeholder="Enter Duration" formControlName="duration" />
+        <span class="required" *ngIf="isValid('duration')">Duration is required</span>
+      </div>
+
+      <div class="mb-3">
+        <label for="slug-input" class="form-label"><sup class="required">*</sup> slug </label>
+        <input id="slug-input" type="text" class="form-control" placeholder="Enter slug" formControlName="slug" />
+        <span class="required" *ngIf="isValid('slug')">slug is required</span>
+      </div>
+      <div class="mb-3">
+        <label for="basePrice-input" class="form-label"><sup class="required">*</sup> basePrice </label>
+        <input id="basePrice-input" type="text" class="form-control" placeholder="Enter basePrice" formControlName="slug" />
+        <span class="required" *ngIf="isValid('basePrice')">basePrice is required</span>
+      </div>
+      <div class="mb-3">
+        <label for="around_location-input" class="form-label"><sup class="required">*</sup> Pickup (Around Location)</label>
+        <input id="around_location-input" type="text" class="form-control" placeholder="Enter Value" formControlName="around_location" />
+        <span class="required" *ngIf="isValid('around_location')">Around Location is required</span>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-3">
+      <div class="mb-3">
+        <label class="form-label"><sup class="required">*</sup> Agency </label>
+
+        <select class="form-select" aria-label="Category" formControlName="agencyId">
+          <option value="0" selected>Select Agency</option>
+
+          <option [value]="a.agencyId" *ngFor="let a of agencies">{{ a.slug }}</option>
+        </select>
+        <span class="required" *ngIf="isValid('agencyId')">Please select Category</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label"><sup class="required">*</sup> Category </label>
+
+        <select class="form-select" aria-label="Category" formControlName="categoryId">
+          <option value="0" selected>Select Category</option>
+
+          <option [value]="c.categoryId" *ngFor="let c of categories">{{ c.title }}</option>
+        </select>
+        <span class="required" *ngIf="isValid('categoryId')">Please select Category</span>
+      </div>
+      <div class="mb-3">
+        <label for="name-input" class="form-label"><sup class="required">*</sup> Pickup Location </label>
+
+        <select class="form-select" aria-label="locations" formControlName="pickup_location_id">
+          <option value="0" selected>Select Location</option>
+          <option [value]="c.locationId" *ngFor="let c of locations">{{ c.name }}</option>
+        </select>
+        <span class="required" *ngIf="isValid('pickup_location_id')">Please select Location</span>
+      </div>
+      <div class="mb-3">
+        <label for="name-input" class="form-label"><sup class="required">*</sup> Recurring Type </label>
+
+        <select class="form-select" aria-label="Recurring Type" formControlName="recurring_type">
+          <option value="onetime" selected>One Time</option>
+          <option value="everyweek">Every Week</option>
+          <option value="everymonth">Every Month</option>
+          <option value="everyyear">Every Year</option>
+        </select>
+        <span class="required" *ngIf="isValid('recurring_type')">Please select Location</span>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-info">Save</button>
+</form>

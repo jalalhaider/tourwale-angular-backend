@@ -1,4 +1,5 @@
 export class Tour {
+  tourId!: number
   agencyId!: number
   categoryId!: number
   name!: string

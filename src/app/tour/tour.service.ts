@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core"
 import { catchError, Observable, throwError } from "rxjs"
 import { Tour } from "./models/tour.models"
-import { HttpClient, HttpErrorResponse } from "@angular/common/http"
+import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http"
+import { environment } from "../../environments/environment"
 
 @Injectable()
 export class TourService {
@@ -14,8 +15,9 @@ export class TourService {
   }
 
   getList(where: any): Observable<any> {
+    const params = new HttpParams({ fromObject: where })
     return this.http
-      .get("http://localhost:4100/api/v1/tour")
+      .get(`${environment.url}/api/v1/tour`, { params })
       .pipe(catchError(catchError(this.handleError)))
   }
 

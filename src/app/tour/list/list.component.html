@@ -1,19 +1,57 @@
 <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Tour</h4>
-          <h5 class="card-subtitle text-muted">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-            laboriosam doloremque minus illo odit harum provident
-          </h5>
-  
-          <a routerLink="/tour/create" class="btn btn-info"
-            ><i class="bi bi-people"></i> Add Tour</a
-          >
-       
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Tour</h4>
+        <h5 class="card-subtitle text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim laboriosam doloremque minus illo odit harum provident</h5>
+
+        <a routerLink="/tour/create" class="btn btn-info"><i class="bi bi-people"></i> Add Tour</a>
+
+        <div class="table-responsive">
+          <table class="table align-middle text-nowrap">
+            <thead>
+              <tr>
+                <th class="text-dark font-medium fs-4">Tour</th>
+                <th class="text-dark font-medium fs-4">Overview</th>
+                <th class="text-dark font-medium fs-4">Status</th>
+                <th class="text-dark font-medium fs-4">Edit</th>
+                <th class="text-dark font-medium fs-4">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of list">
+                <td>
+                  <div class="d-flex align-items-center">
+                    <img alt="user" width="45" class="rounded-circle" [src]="t.featured_image" />
+                    <div class="ms-3">
+                      <h5 class="mb-0 font-medium">{{ t.name }}</h5>
+                      <span class="text-muted">{{ t.slug }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="fs-4">
+                  {{ t.overview }}
+                </td>
+                <td>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input cursor-pointer" type="checkbox" [checked]="t.isActive" />
+                  </div>
+                </td>
+                <td>
+                  <button class="btn btn-info" (click)="handleEdit($event, t)">
+                    <span class="bi bi-pencil-square"> Edit </span>
+                  </button>
+                </td>
+                <td>
+                  <button class="btn btn-danger" (click)="handleDelete($event, t)">
+                    <span class="bi bi-trash"> Delete</span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
-  
+</div>

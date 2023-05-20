@@ -24,8 +24,6 @@ export class RequestInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    console.log("request", request)
-
     if (whiteListUrls.find((w) => request.url.includes(w))) {
       return next.handle(request)
     }

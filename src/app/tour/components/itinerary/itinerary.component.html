@@ -1,6 +1,9 @@
 <div class="row">
   <div class="col-sm-12 col-md-3" style="border-right: 1px solid">
-    <h4 class="card-title">Itinerary</h4>
+    <h4 class="card-title">
+      Itinerary <button class="btn btn-info" (click)="newForm()"><i class="bi bi-plus-circle"></i>&nbsp;Create</button>
+    </h4>
+
     <app-loading-bar *ngIf="listLoading"></app-loading-bar>
 
     <div class="i-item-wrapper" *ngFor="let i of list">
@@ -25,6 +28,8 @@
 
   <div class="col-9">
     <app-loading-bar *ngIf="detailLoading"></app-loading-bar>
+
+    <h1>{{ isEdit ? "Update" : "Create" }}</h1>
     <form [formGroup]="form" (ngSubmit)="handleSubmit()">
       <div class="row">
         <div class="col-sm-12 col-md-6">
@@ -95,7 +100,7 @@
 
         <quill-editor format="html" [(ngModel)]="editorContent" [styles]="{ height: '250px' }" (onContentChanged)="onContentChanged($event, 'description')" [modules]="quillModules"> </quill-editor>
       </div>
-      <button class="w-100 btn btn-info" (click)="handleSubmit()">{{ isEdit ? "Update" : "Save" }}</button>
+      <button class="w-100 btn btn-info" (click)="handleSubmit()">{{ isEdit ? "Update" : "Create" }}</button>
     </div>
   </div>
 </div>
