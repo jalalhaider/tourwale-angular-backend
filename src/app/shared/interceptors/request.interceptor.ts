@@ -10,7 +10,7 @@ import { LocalStorageService } from "../../shared/services"
 import { Router } from "@angular/router"
 
 // You can add URL which don't need AUTH header
-const whiteListUrls = ["login", "refreshToken"]
+const whiteListUrls = ["sign-in", "refreshToken"]
 
 @Injectable({
   providedIn: "root",

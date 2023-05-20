@@ -1,38 +1,38 @@
 import { Injectable } from "@angular/core"
 import { catchError, Observable, throwError } from "rxjs"
-import { Category } from "./models/category.models"
+import { Location } from "./models/location.models"
 import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http"
 import { environment } from "../../environments/environment"
 @Injectable({
   providedIn: "root",
 })
-export class CategoryService {
+export class LocationService {
   constructor(private http: HttpClient) {}
 
   get(id: number) {
     return this.http
-      .get("http://localhost:4100/api/v1/category/" + id)
+      .get("http://localhost:4100/api/v1/location/" + id)
       .pipe(catchError(this.handleError))
   }
 
   getList(where: any): Observable<any> {
     const params = new HttpParams({ fromObject: where })
     return this.http
-      .get(`${environment.url}/api/v1/category`, { params })
+      .get(`${environment.url}/api/v1/location`, { params })
       .pipe(catchError(catchError(this.handleError)))
   }
 
-  create(dto: Category) {
+  create(dto: Location) {
     const httpOption = {}
     return this.http
-      .post("http://localhost:4100/api/v1/category", dto, httpOption)
+      .post("http://localhost:4100/api/v1/location", dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 
-  update(id: number, dto: Category) {
+  update(id: number, dto: Location) {
     const httpOption = {}
     return this.http
-      .put("http://localhost:4100/api/v1/category/" + id, dto, httpOption)
+      .put("http://localhost:4100/api/v1/location/" + id, dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 
@@ -55,7 +55,7 @@ export class CategoryService {
         error.error
       )
     }
-    // Return an observable with a category-facing error message.
+    // Return an observable with a location-facing error message.
     return throwError(
       () => new Error("Something bad happened; please try again later.")
     )

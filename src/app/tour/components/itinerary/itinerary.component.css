@@ -1,0 +1,21 @@
+.i-item-wrapper .i-item {
+  margin-top: 26px;
+  border-bottom: 1px solid;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.i-item-wrapper .i-item .i-item-id {
+  flex: 1;
+}
+
+.i-item-wrapper .i-item .i-item-name {
+  flex: 6;
+}
+
+.i-item-wrapper .i-item .i-item-actions {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+}

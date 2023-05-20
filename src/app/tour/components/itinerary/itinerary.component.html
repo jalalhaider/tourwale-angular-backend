@@ -1,0 +1,98 @@
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
+  <div class="row">
+    <div class="col-sm-12 col-md-3" style="border-right: 1px solid">
+      <h4 class="card-title">Itinerary</h4>
+      <app-loading-bar *ngIf="listLoading"></app-loading-bar>
+
+      <div class="i-item-wrapper" *ngFor="let i of list">
+        <div class="i-item">
+          <div class="i-item-id">{{ i.sortOrder }}</div>
+          <div class="i-item-name">
+            <span style="display: inline-block; width: 133px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
+              <span>{{ i.name }}</span></span
+            >
+          </div>
+
+          <div class="i-item-actions">
+            <div class="btn"><i class="bi bi-people" class="bi bi-pencil"></i></div>
+            &nbsp;
+            <div class="btn" (click)="handlerDelete(i.tourId, i.sortOrder)"><i class="bi bi-people" class="bi bi-trash"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-i-item" *ngIf="!list.length">No Itinerary</div>
+    </div>
+    <div class="col-9">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="mb-3">
+            <div class="image-container">
+              <img id="frame" width="100%" [src]="imageSrc" class="image" alt="avatar" />
+            </div>
+            <br />
+            <label for="featured-image" class="form-label"><sup class="required">*</sup> Upload Featured Image </label>
+            <input id="featured-image" type="file" class="form-control" placeholder="Enter Featured Image" (change)="onFileChange($event)" />
+            <span class="required" *ngIf="isValid('featuredImage')">image is required</span>
+          </div>
+
+          <div class="mb-3">
+            <label for="time-input" class="form-label"> Time </label>
+            <ngb-timepicker [(ngModel)]="time" formControlName="time" [meridian]="false"></ngb-timepicker>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <div class="mb-3">
+            <label for="name-input" class="form-label"><sup class="required">*</sup> Name </label>
+            <input id="name-input" type="text" class="form-control" placeholder="Enter Name" formControlName="name" />
+            <span class="required" *ngIf="isValid('name')">Name is required</span>
+          </div>
+          <div class="mb-3">
+            <label for="sortorder-input" class="form-label"><sup class="required">*</sup> Sort Order </label>
+            <input id="sortorder-input" type="text" class="form-control" placeholder="Enter Sort Order" formControlName="sortOrder" />
+            <span class="required" *ngIf="isValid('sortOrder')">Sort Order is required</span>
+          </div>
+          <div class="mb-3">
+            <label class="form-label"><sup class="required">*</sup> Category </label>
+
+            <select class="form-select" aria-label="Category" formControlName="categoryId">
+              <option selected>Select Category</option>
+
+              <option [value]="c.categoryId" *ngFor="let c of categories">{{ c.title }}</option>
+            </select>
+            <span class="required" *ngIf="isValid('categoryId')">Please select Category</span>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label"><sup class="required">*</sup> Pickup Location </label>
+
+            <select class="form-select" aria-label="locations" formControlName="locationId">
+              <option selected>Select Location</option>
+              <option [value]="c.locationId" *ngFor="let c of locations">{{ c.name }}</option>
+            </select>
+            <span class="required" *ngIf="isValid('locationId')">Please select Location</span>
+          </div>
+
+          <div class="mb-3">
+            <label for="name-input" class="form-label"><sup class="required">*</sup> Date </label>
+
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" formControlName="date" />
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">Select</button>
+              </div>
+            </div>
+            <span class="required" *ngIf="isValid('date')">Please select Date</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="mb-3">
+          <label class="form-label"><sup class="required">*</sup> Description </label>
+          <quill-editor [styles]="{ height: '250px' }" (onContentChanged)="onContentChanged($event, 'description')" [modules]="quillModules"> </quill-editor>
+        </div>
+        <button class="w-100 btn btn-info" type="submit">Save</button>
+      </div>
+    </div>
+  </div>
+</form>

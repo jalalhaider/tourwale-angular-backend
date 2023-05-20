@@ -9,14 +9,15 @@
 
     <nav>
       <div class="nav nav-tabs" id="language-tab" role="tablist">
-        <button class="nav-link active" id="nav-general-tab" data-bs-toggle="tab" data-bs-target="#nav-general" type="button" role="tab" aria-controls="nav-general" aria-selected="true">General</button>
+        <button class="nav-link" id="nav-general-tab" data-bs-toggle="tab" data-bs-target="#nav-general" type="button" role="tab" aria-controls="nav-general" aria-selected="true">General</button>
         <button class="nav-link" id="nav-editors-tab" data-bs-toggle="tab" data-bs-target="#nav-editors" type="button" role="tab" aria-controls="nav-editors" aria-selected="false">Information</button>
         <button class="nav-link" id="nav-images-tab" data-bs-toggle="tab" data-bs-target="#nav-images" type="button" role="tab" aria-controls="nav-images" aria-selected="false">Images</button>
+        <button class="nav-link active" id="nav-itinerary-tab" data-bs-toggle="tab" data-bs-target="#nav-itinerary" type="button" role="tab" aria-controls="nav-itinerary" aria-selected="false">Itinerary</button>
       </div>
     </nav>
     <br />
     <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
+      <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
         <div class="row">
           <div class="col-sm-12 col-md-3">
             <div class="mb-3">
@@ -213,6 +214,9 @@
       </div>
       <div class="tab-pane fade" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
         <app-file-upload></app-file-upload>
+      </div>
+      <div class="tab-pane fade show active" id="nav-itinerary" role="tabpanel" aria-labelledby="nav-itinerary-tab">
+        <app-tour-itinerary></app-tour-itinerary>
       </div>
     </div>
   </div>
