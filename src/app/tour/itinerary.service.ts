@@ -7,9 +7,9 @@ import { environment } from "../../environments/environment"
 export class ItineraryService {
   constructor(private http: HttpClient) {}
 
-  get(id: number) {
+  get(tourId: number, sortOrder: number) {
     return this.http
-      .get(`${environment.url}/api/v1/tour-itinerary` + id)
+      .get(`${environment.url}/api/v1/tour-itinerary/${tourId}/${sortOrder}`)
       .pipe(catchError(this.handleError))
   }
 
@@ -27,10 +27,14 @@ export class ItineraryService {
       .pipe(catchError(this.handleError))
   }
 
-  update(id: number, dto: Iitinerary) {
+  update(tourId: number, sortOrder: number, dto: Iitinerary) {
     const httpOption = {}
     return this.http
-      .put("http://localhost:4100/api/v1/itinerary/" + id, dto, httpOption)
+      .put(
+        `${environment.url}/api/v1/tour-itinerary/${tourId}/${sortOrder}`,
+        dto,
+        httpOption
+      )
       .pipe(catchError(this.handleError))
   }
 
