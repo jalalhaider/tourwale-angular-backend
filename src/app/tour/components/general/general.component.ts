@@ -6,16 +6,20 @@ import { CategoryService } from "../../../category/category.service"
 import { AgencyService } from "../../../agency/agency.service"
 import { LocationService } from "../../../location/location.service"
 import { end } from "@popperjs/core"
+import { ActivatedRoute, Router } from "@angular/router"
+import { NgbDate } from "@ng-bootstrap/ng-bootstrap"
+import { environment } from "../../../../environments/environment"
 
 @Component({
   selector: "app-tour-general",
   templateUrl: "./general.component.html",
 })
 export class GeneralComponent {
-  s = false
+  isEdit = false
+  tourId = 0
+  routeParams = null
   imageSrc: string = "assets/images/bg/bg1_1_50.jpg"
-  startDate = { year: 2023, month: 2, day: 2 }
-  endDate = { year: 2023, month: 2, day: 2 }
+  date = new NgbDate(2020, 19, 2)
 
   form = this.fb.group({
     agencyId: [0, Validators.required],
@@ -29,8 +33,8 @@ export class GeneralComponent {
     overview: ["", Validators.required],
     duration: ["", Validators.required],
     featured_image: [{}, Validators.required],
-    start_date: ["", Validators.required],
-    end_date: ["", Validators.required],
+    start_date: [new NgbDate(2023, 0, 1), Validators.required],
+    end_date: [new NgbDate(2023, 0, 1), Validators.required],
     slug: [""],
     around_location: [""],
     recurring_type: ["", Validators.required],
@@ -42,6 +46,7 @@ export class GeneralComponent {
   categories: any[] = []
   locations: any[] = []
   agencies: any[] = []
+
   constructor(
     private tour: TourService,
     private fb: FormBuilder,
@@ -49,18 +54,82 @@ export class GeneralComponent {
     private category: CategoryService,
     private agency: AgencyService,
     private location: LocationService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.getAgencies()
     this.getCategories()
     this.getLocations()
+
+    //Check if current r
+    this.route.queryParams.subscribe((params) => {
+      this.tourId = params["_id"]
+      if (this.tourId) {
+        this.getTourAndUpdateFormValues()
+        this.isEdit = true
+      }
+    })
   }
+
+  onFileChange(event: any) {
+    const reader = new FileReader()
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files
+      reader.readAsDataURL(file)
+
+      reader.onload = () => {
+        this.imageSrc = reader.result as string
+        this.form.controls.featured_image.setValue(file)
+      }
+    }
+  }
+
   isValid(field: string): boolean {
     return (
       (!this.form.get(field)?.valid && this.form.get(field)?.touched) || false
     )
+  }
+
+  getTourAndUpdateFormValues() {
+    this.tour.get(this.tourId).subscribe((response: any) => {
+      const tdate = new Date(response.start_date)
+      const tedate = new Date(response.end_date)
+
+      this.form.patchValue({
+        agencyId: response.agencyId,
+        categoryId: response.categoryId,
+        pickup_location_id: response.pickup_location_id,
+        basePrice: response.basePrice,
+        name: response.name,
+        languages: response.languages,
+        highlights: response.highlights,
+        departure_details: response.departure_details,
+        overview: response.overview,
+        duration: response.duration,
+        featured_image: response.featured_image,
+        start_date: new NgbDate(
+          tdate.getFullYear(),
+          tdate.getMonth() + 1,
+          tdate.getDate()
+        ),
+        end_date: new NgbDate(
+          tedate.getFullYear(),
+          tedate.getMonth() + 1,
+          tedate.getDate()
+        ),
+        slug: response.slug,
+        around_location: response.around_location,
+        recurring_type: response.recurring_type,
+        is_custom_tour: response.is_custom_tour,
+        is_draft: response.is_draft,
+        isActive: response.isActive,
+      })
+      this.imageSrc = `${environment.imageBaseURL}${response.featured_image}`
+    })
   }
 
   getCategories() {
@@ -68,18 +137,20 @@ export class GeneralComponent {
       this.categories = response
     })
   }
+
   getLocations() {
     this.location.getList({}).subscribe((response: any) => {
       this.locations = response
     })
   }
+
   getAgencies() {
     this.agency.getList({}).subscribe((response: any) => {
       this.agencies = response
     })
   }
 
-  async handleSave() {
+  async handleCreate() {
     //emit form values after validating
 
     console.log(this.form.value)
@@ -90,7 +161,7 @@ export class GeneralComponent {
         sortOrder: 0,
         mediaType: "image",
         entityId: 3,
-        entity: "itinerary",
+        entity: "tour",
         altTag: "Featured Image",
         isActive: true,
         resource: this.form.value.featured_image,
@@ -146,17 +217,75 @@ export class GeneralComponent {
     }
   }
 
-  onFileChange(event: any) {
-    const reader = new FileReader()
+  async handleUpdate() {
+    //emit form values after validating
 
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files
-      reader.readAsDataURL(file)
+    console.log(this.form.value)
+    if (this.form.valid) {
+      // upload feature image
+      let media: any = {}
+      if (this.form.value.featured_image instanceof File) {
+        const mediadto = {
+          sortOrder: 0,
+          mediaType: "image",
+          entityId: 3,
+          entity: "tour",
+          altTag: "Featured Image",
+          isActive: true,
+          resource: this.form.value.featured_image,
+        }
+        const dt = this.util.toFormData(mediadto)
 
-      reader.onload = () => {
-        this.imageSrc = reader.result as string
-        this.form.controls.featured_image.setValue(file)
+        media = await new Promise((res, rej) => {
+          this.tour.uploadImage(dt).subscribe((response) => {
+            res(response)
+          })
+        })
+      } else {
+        media.resourcePath = this.form.value.featured_image
       }
+
+      let tmpdate: any = this.form.value.start_date
+      const start_date = new Date(
+        `${tmpdate.year}-${tmpdate.month}-${tmpdate.day}`
+      )
+      tmpdate = this.form.value.end_date
+      const end_date = new Date(
+        `${tmpdate.year}-${tmpdate.month}-${tmpdate.day}`
+      )
+
+      const dto: any = {
+        agencyId: Number(this.form.value.agencyId),
+        categoryId: Number(this.form.value.categoryId),
+        pickup_location_id: Number(this.form.value.pickup_location_id),
+        basePrice: Number(this.form.value.basePrice),
+        name: this.form.value.name,
+        languages: this.form.value.languages,
+        highlights: this.form.value.highlights,
+        departure_details: this.form.value.departure_details,
+        overview: this.form.value.overview,
+        duration: this.form.value.duration,
+        featured_image: media.resourcePath,
+        start_date: start_date.toISOString(),
+        end_date: end_date.toISOString(),
+        slug: this.form.value.slug,
+        around_location: this.form.value.around_location,
+        recurring_type: this.form.value.recurring_type,
+        is_custom_tour: this.form.value.is_custom_tour,
+        is_draft: this.form.value.is_draft,
+        isActive: this.form.value.isActive,
+      }
+
+      this.tour.update(this.tourId, dto).subscribe({
+        next: (response) => {
+          this.toastService.showSuccessToast("Success", "Tour Updated")
+        },
+        error: (error) =>
+          this.toastService.showErrorToast("Failed", error.message),
+      })
+    } else {
+      console.log("form", this.form.valid)
+      this.toastService.showErrorToast("Failed", "Invalid Form")
     }
   }
 }

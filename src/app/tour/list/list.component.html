@@ -22,7 +22,7 @@
               <tr *ngFor="let t of list">
                 <td>
                   <div class="d-flex align-items-center">
-                    <img alt="user" width="45" class="rounded-circle" [src]="t.featured_image" />
+                    <img alt="user" width="45" class="rounded-circle" [src]="getImage(t.featured_image)" />
                     <div class="ms-3">
                       <h5 class="mb-0 font-medium">{{ t.name }}</h5>
                       <span class="text-muted">{{ t.slug }}</span>

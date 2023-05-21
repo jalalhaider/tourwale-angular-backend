@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="handleSave()">
+<form [formGroup]="form" (ngSubmit)="handleCreate()">
   <div class="row">
     <div class="col-sm-12 col-md-3">
       <div class="mb-3">
@@ -14,19 +14,19 @@
         <label class="form-label"><sup class="required">*</sup> Start Date </label>
 
         <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd" [startDate]="startDate" name="dp" ngbDatepicker #sd="ngbDatepicker" formControlName="start_date" />
+          <input class="form-control" placeholder="yyyy-mm-dd" name="sd" ngbDatepicker #sd="ngbDatepicker" formControlName="start_date" />
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="sd.toggle()" type="button">Select</button>
           </div>
         </div>
-        <span class="required" *ngIf="isValid('start_date')">End Date is required</span>
+        <span class="required" *ngIf="isValid('start_date')">Start Date is required</span>
       </div>
-      <span class="required" *ngIf="isValid('start_date')">Start Date is required</span>
+
       <div class="mb-3">
         <label for="name-input" class="form-label"><sup class="required">*</sup> End Date </label>
 
         <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd" [startDate]="endDate" name="dp" ngbDatepicker #ed="ngbDatepicker" formControlName="end_date" />
+          <input class="form-control" placeholder="yyyy-mm-dd" name="ed" ngbDatepicker #ed="ngbDatepicker" formControlName="end_date" />
           <div class="input-group-append">
             <button class="btn btn-outline-secondary calendar" (click)="ed.toggle()" type="button">Select</button>
           </div>
@@ -36,14 +36,14 @@
 
       <div class="mb-3">
         <div class="form-check form-switch">
-          <input id="active-input" class="form-check-input cursor-pointer" type="checkbox" formControlName="is_draft" />
-          <label for="active-input" class="form-label"><sup class="required">*</sup> Is Draft </label>
+          <input id="draft-input" class="form-check-input cursor-pointer" type="checkbox" formControlName="is_draft" />
+          <label for="draft-input" class="form-label"><sup class="required">*</sup> Is Draft </label>
         </div>
       </div>
       <div class="mb-3">
         <div class="form-check form-switch">
-          <label for="active-input" class="form-label"><sup class="required">*</sup> Is Custom Tour </label>
-          <input id="active-input" class="form-check-input cursor-pointer" type="checkbox" formControlName="is_custom_tour" />
+          <label for="custom-input" class="form-label"><sup class="required">*</sup> Is Custom Tour </label>
+          <input id="custom-input" class="form-check-input cursor-pointer" type="checkbox" formControlName="is_custom_tour" />
         </div>
       </div>
 
@@ -98,7 +98,7 @@
       </div>
       <div class="mb-3">
         <label for="basePrice-input" class="form-label"><sup class="required">*</sup> basePrice </label>
-        <input id="basePrice-input" type="text" class="form-control" placeholder="Enter basePrice" formControlName="slug" />
+        <input id="basePrice-input" type="number" class="form-control" placeholder="Enter basePrice" formControlName="basePrice" />
         <span class="required" *ngIf="isValid('basePrice')">basePrice is required</span>
       </div>
       <div class="mb-3">
@@ -150,5 +150,8 @@
       </div>
     </div>
   </div>
-  <button class="btn btn-info">Save</button>
 </form>
+
+<button *ngIf="isEdit" class="btn btn-info" (click)="handleUpdate()">Update</button>
+
+<button *ngIf="!isEdit" class="btn btn-info" (click)="handleCreate()">Create</button>

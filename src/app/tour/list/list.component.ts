@@ -2,6 +2,7 @@ import { Component } from "@angular/core"
 import { TourService } from "../tour.service"
 import { Tour } from "../models"
 import { Router } from "@angular/router"
+import { environment } from "../../../environments/environment"
 
 @Component({
   styleUrls: ["./list.component.css"],
@@ -24,4 +25,7 @@ export class ListComponent {
   }
 
   handleDelete(event: any, tour: Tour) {}
+  getImage(image: string) {
+    return `${environment.imageBaseURL}${image}`
+  }
 }

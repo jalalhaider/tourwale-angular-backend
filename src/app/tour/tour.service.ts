@@ -55,8 +55,12 @@ export class TourService {
       )
     }
     // Return an observable with a tour-facing error message.
-    return throwError(
-      () => new Error("Something bad happened; please try again later.")
-    )
+    return throwError(() => {
+      const rr: any = new Error(
+        "Something bad happened; please try again later."
+      )
+      rr.message = error.error.message
+      return rr
+    })
   }
 }
