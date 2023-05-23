@@ -1,6 +1,9 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http"
-import { Component } from "@angular/core"
+import { Component, OnDestroy, OnInit } from "@angular/core"
 import { UtilService } from "../../../shared/services/util.service"
+import { TourService } from "../../tour.service"
+import { ToastService } from "../../../shared/services"
+import { Tour } from "../../models"
 
 const example = [
   {
@@ -88,74 +91,80 @@ const example = [
   templateUrl: "./file-upload.component.html",
   styleUrls: ["./file-upload.component.css"],
 })
-export class FileUploadComponent {
-  files: any[] = example
-  onHover = false
-
-  constructor(private http: HttpClient, private util: UtilService) {}
-
-  onDrop(event: DragEvent): void {
-    event.preventDefault()
-    const files = event.dataTransfer?.files || null
-    this.handleFiles(files)
+export class FileUploadComponent implements OnInit, OnDestroy {
+  files: any = []
+  tour!: Tour
+  isEdit = false
+  sortOrder = 1
+  constructor(
+    private tourService: TourService,
+    private toastService: ToastService,
+    private util: UtilService
+  ) {}
+  ngOnDestroy(): void {}
+  ngOnInit(): void {
+    this.tour = this.tourService.state
+    if (this.tour) {
+      this.isEdit = true
+      this.getImages()
+    }
   }
 
-  onDragOver(event: DragEvent): void {
-    event.preventDefault()
-    this.onHover = true
+  getImages() {
+    this.tourService
+      .getMedia(this.tour.tourId, "tour")
+      .subscribe((response: any) => {
+        this.files = response
+        this.sortOrder = response.length
+      })
   }
 
-  onDragLeave(event: DragEvent): void {
-    event.preventDefault()
-    this.onHover = false
-  }
+  handleFiles(files: any): void {
+    console.log("Jalal", files)
 
-  handleFiles(files: FileList | null): void {
     if (files) {
       for (let i = 0; i < files.length; i++) {
         const file = files[i]
         // Handle each file as needed (e.g., upload to server)
         console.log("File:", file)
-        const httpOption = {
-          headers: new HttpHeaders({
-            Authorization: "Bearer ",
-          }),
-        }
+
         const form = {
-          sortOrder: 1,
+          sortOrder: this.sortOrder + i,
           mediaType: "image",
-          entityId: 3,
+          entityId: this.tour.tourId,
           entity: "tour",
-          altTag: "Lorem Ipsum",
+          altTag: `tour-image-${this.sortOrder}`,
           isActive: true,
           resource: file,
         }
         const dto = this.util.toFormData(form)
-        this.http
-          .post("http://localhost:4100/api/v1/media", dto, httpOption)
-          .subscribe({
-            next: (res: any) => {
-              this.files.push(res)
-            },
-            error: (err) => {
-              console.error(err)
-            },
-          })
+        this.tourService.uploadImage(dto).subscribe({
+          next: (response) => {
+            this.sortOrder = this.sortOrder + i
+            this.toastService.showSuccessToast(
+              "Success",
+              "Image uploaded " + this.sortOrder
+            )
+            this.files.push(response)
+          },
+          error: (err) => {
+            this.toastService.showErrorToast("Error", err.message)
+          },
+        })
       }
     }
   }
 
   onDelete(file: any) {
-    console.log(file)
-    this.http
-      .delete("http://localhost:4100/api/v1/media/" + file.mediaId)
-      .subscribe({
-        next: (res: any) => {
-          this.files = this.files.filter((f) => f.mediaId != file.mediaId)
-        },
-        error: (err) => {
-          console.error(err)
-        },
-      })
+    this.tourService.deleteImage(file.mediaId).subscribe({
+      next: (res: any) => {
+        this.files = this.files.filter((f: any) => f.mediaId != file.mediaId)
+        this.toastService.showSuccessToast("Success", "Image Deleted ")
+        this.sortOrder--
+      },
+      error: (err) => {
+        this.toastService.showErrorToast("Error", err.message)
+      },
+    })
   }
 }

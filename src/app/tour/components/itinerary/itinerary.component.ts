@@ -1,9 +1,9 @@
-import { Component } from "@angular/core"
+import { Component, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { ToastService, UtilService } from "../../../shared/services"
 import { TourService } from "../../tour.service"
 import { ItineraryService } from "../../itinerary.service"
-import { Iitinerary } from "../../../tour/models"
+import { Iitinerary, Tour } from "../../../tour/models"
 import { CategoryService } from "../../../category/category.service"
 import { LocationService } from "../../../location/location.service"
 import { environment } from "../../../../environments/environment"
@@ -13,8 +13,9 @@ import { environment } from "../../../../environments/environment"
   selector: "app-tour-itinerary",
   templateUrl: "./itinerary.component.html",
 })
-export class ItineraryComponent {
+export class ItineraryComponent implements OnInit, OnDestroy {
   tourId = 1
+  tour!: Tour
   listLoading = false
   detailLoading = false
   editorContent = ""
@@ -61,7 +62,7 @@ export class ItineraryComponent {
   locations: any[] = []
 
   constructor(
-    private tour: TourService,
+    private tourService: TourService,
     private itinerary: ItineraryService,
     private category: CategoryService,
     private location: LocationService,
@@ -69,8 +70,14 @@ export class ItineraryComponent {
     private fb: FormBuilder,
     private toastService: ToastService
   ) {}
+  ngOnDestroy(): void {}
 
   ngOnInit(): void {
+    this.tour = this.tourService.state
+    if (this.tour) {
+      this.tourId = this.tour.tourId
+    }
+
     this.form.controls.tourId.setValue(this.tourId)
     this.getItinerary()
     this.getCategories()

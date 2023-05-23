@@ -16,6 +16,7 @@ import { LoadingBarComponent } from "./loading-bar/loading-bar.component"
 import { ToastComponent } from "./toast/toast.component"
 import { ToasterComponent } from "./toast/toaster.component"
 import { ToastService } from "../shared/services/toast.service"
+import { MultiFileUploaderComponent } from "./multi-file-uploader/multi-file-uploader.component"
 
 @NgModule({
   imports: [
@@ -36,8 +37,14 @@ import { ToastService } from "../shared/services/toast.service"
     LoadingBarComponent,
     ToastComponent,
     ToasterComponent,
+    MultiFileUploaderComponent,
   ],
 
-  exports: [NgbdAlertBasicComponent, LoadingBarComponent, ToasterComponent],
+  exports: [
+    NgbdAlertBasicComponent,
+    LoadingBarComponent,
+    ToasterComponent,
+    MultiFileUploaderComponent,
+  ],
 })
 export class ComponentsModule {}

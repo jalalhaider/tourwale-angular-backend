@@ -53,7 +53,19 @@ export class TourService {
   uploadImage(dto: any) {
     const httpOption = {}
     return this.http
-      .post("http://localhost:4100/api/v1/media/", dto, httpOption)
+      .post(`${environment.url}/api/v1/media/`, dto, httpOption)
+      .pipe(catchError(this.handleError))
+  }
+  getMedia(entityId: number, entity: string) {
+    const params = new HttpParams({ fromObject: { entityId, entity } })
+    return this.http
+      .get(`${environment.url}/api/v1/media`, { params })
+      .pipe(catchError(this.handleError))
+  }
+  deleteImage(mediaId: string) {
+    const httpOption = {}
+    return this.http
+      .delete(`${environment.url}/api/v1/media/` + mediaId)
       .pipe(catchError(this.handleError))
   }
 

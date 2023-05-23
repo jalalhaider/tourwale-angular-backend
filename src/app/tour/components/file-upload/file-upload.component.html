@@ -1,7 +1,5 @@
-<div class="drop-zone" [class.blueBg]="onHover" (drop)="onDrop($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
-  <span class="drop-message">Drag and drop files here or click to browse</span>
-</div>
-<br />
+<app-multi-file-uploader (onDropFiles)="handleFiles($event)"></app-multi-file-uploader>
+
 <h5>Uploaded images</h5>
 <div class="uploaded-image-wrapper">
   <div class="row">
