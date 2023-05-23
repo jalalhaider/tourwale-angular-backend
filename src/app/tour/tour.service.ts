@@ -1,16 +1,31 @@
 import { Injectable } from "@angular/core"
-import { catchError, Observable, throwError } from "rxjs"
+import { catchError, Subject, Observable, throwError, tap } from "rxjs"
 import { Tour } from "./models/tour.models"
 import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http"
 import { environment } from "../../environments/environment"
 
 @Injectable()
 export class TourService {
+  public tourSubject: Subject<Tour> = new Subject<Tour>()
+  public _state: any = {}
+
   constructor(private http: HttpClient) {}
+  subscribeState(cb: any) {
+    return this.tourSubject.subscribe(cb)
+  }
+  set state(value: any) {
+    this._state = value
+    this.tourSubject.next(value)
+  }
+
+  get state() {
+    return this._state
+  }
 
   get(id: number) {
     return this.http
       .get("http://localhost:4100/api/v1/tour/" + id)
+      .pipe(tap((x) => (this._state = x)))
       .pipe(catchError(this.handleError))
   }
 

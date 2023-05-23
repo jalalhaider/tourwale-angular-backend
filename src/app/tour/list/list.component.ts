@@ -16,7 +16,6 @@ export class ListComponent {
   ngOnInit() {
     const query = {}
     this.tour.getList(query).subscribe((response) => {
-      console.log("response", response)
       this.list = response
     })
   }

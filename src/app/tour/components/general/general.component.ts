@@ -1,4 +1,4 @@
-import { Component } from "@angular/core"
+import { Component, OnDestroy } from "@angular/core"
 import { TourService } from "../../tour.service"
 import { ToastService, UtilService } from "../../../shared/services"
 import { FormBuilder, Validators } from "@angular/forms"
@@ -9,14 +9,15 @@ import { end } from "@popperjs/core"
 import { ActivatedRoute, Router } from "@angular/router"
 import { NgbDate } from "@ng-bootstrap/ng-bootstrap"
 import { environment } from "../../../../environments/environment"
+import { Tour } from "../../models"
 
 @Component({
   selector: "app-tour-general",
   templateUrl: "./general.component.html",
 })
-export class GeneralComponent {
+export class GeneralComponent implements OnDestroy {
   isEdit = false
-  tourId = 0
+  tour!: Tour
   routeParams = null
   imageSrc: string = "assets/images/bg/bg1_1_50.jpg"
   date = new NgbDate(2020, 19, 2)
@@ -30,7 +31,7 @@ export class GeneralComponent {
     languages: ["", Validators.required],
     highlights: ["", Validators.required],
     departure_details: ["", Validators.required],
-    overview: ["", Validators.required],
+
     duration: ["", Validators.required],
     featured_image: [{}, Validators.required],
     start_date: [new NgbDate(2023, 0, 1), Validators.required],
@@ -48,7 +49,7 @@ export class GeneralComponent {
   agencies: any[] = []
 
   constructor(
-    private tour: TourService,
+    private tourService: TourService,
     private fb: FormBuilder,
     private util: UtilService,
     private category: CategoryService,
@@ -58,20 +59,18 @@ export class GeneralComponent {
     private router: Router,
     private route: ActivatedRoute
   ) {}
+  ngOnDestroy(): void {}
 
   ngOnInit(): void {
     this.getAgencies()
     this.getCategories()
     this.getLocations()
 
-    //Check if current r
-    this.route.queryParams.subscribe((params) => {
-      this.tourId = params["_id"]
-      if (this.tourId) {
-        this.getTourAndUpdateFormValues()
-        this.isEdit = true
-      }
-    })
+    this.tour = this.tourService.state
+    if (this.tour) {
+      this.isEdit = true
+      this.updateFormValues(this.tour)
+    }
   }
 
   onFileChange(event: any) {
@@ -94,42 +93,40 @@ export class GeneralComponent {
     )
   }
 
-  getTourAndUpdateFormValues() {
-    this.tour.get(this.tourId).subscribe((response: any) => {
-      const tdate = new Date(response.start_date)
-      const tedate = new Date(response.end_date)
+  updateFormValues(response: Tour) {
+    const tdate = new Date(response.start_date)
+    const tedate = new Date(response.end_date)
 
-      this.form.patchValue({
-        agencyId: response.agencyId,
-        categoryId: response.categoryId,
-        pickup_location_id: response.pickup_location_id,
-        basePrice: response.basePrice,
-        name: response.name,
-        languages: response.languages,
-        highlights: response.highlights,
-        departure_details: response.departure_details,
-        overview: response.overview,
-        duration: response.duration,
-        featured_image: response.featured_image,
-        start_date: new NgbDate(
-          tdate.getFullYear(),
-          tdate.getMonth() + 1,
-          tdate.getDate()
-        ),
-        end_date: new NgbDate(
-          tedate.getFullYear(),
-          tedate.getMonth() + 1,
-          tedate.getDate()
-        ),
-        slug: response.slug,
-        around_location: response.around_location,
-        recurring_type: response.recurring_type,
-        is_custom_tour: response.is_custom_tour,
-        is_draft: response.is_draft,
-        isActive: response.isActive,
-      })
-      this.imageSrc = `${environment.imageBaseURL}${response.featured_image}`
+    this.form.patchValue({
+      agencyId: response.agencyId,
+      categoryId: response.categoryId,
+      pickup_location_id: response.pickup_location_id,
+      basePrice: response.basePrice,
+      name: response.name,
+      languages: response.languages,
+      highlights: response.highlights,
+      departure_details: response.departure_details,
+
+      duration: response.duration,
+      featured_image: response.featured_image,
+      start_date: new NgbDate(
+        tdate.getFullYear(),
+        tdate.getMonth() + 1,
+        tdate.getDate()
+      ),
+      end_date: new NgbDate(
+        tedate.getFullYear(),
+        tedate.getMonth() + 1,
+        tedate.getDate()
+      ),
+      slug: response.slug,
+      around_location: response.around_location,
+      recurring_type: response.recurring_type,
+      is_custom_tour: response.is_custom_tour,
+      is_draft: response.is_draft,
+      isActive: response.isActive,
     })
+    this.imageSrc = `${environment.imageBaseURL}${response.featured_image}`
   }
 
   getCategories() {
@@ -169,7 +166,7 @@ export class GeneralComponent {
       const dt = this.util.toFormData(mediadto)
 
       const media: any = await new Promise((res, rej) => {
-        this.tour.uploadImage(dt).subscribe((response) => {
+        this.tourService.uploadImage(dt).subscribe((response) => {
           res(response)
         })
       })
@@ -192,7 +189,7 @@ export class GeneralComponent {
         languages: this.form.value.languages,
         highlights: this.form.value.highlights,
         departure_details: this.form.value.departure_details,
-        overview: this.form.value.overview,
+
         duration: this.form.value.duration,
         featured_image: media.featured_image,
         start_date: start_date.toISOString(),
@@ -205,8 +202,8 @@ export class GeneralComponent {
         isActive: this.form.value.isActive,
       }
 
-      this.tour.create(dto).subscribe({
-        next: (response) => {
+      this.tourService.create(dto).subscribe({
+        next: (response: any) => {
           this.toastService.showSuccessToast("Success", "Tour Created")
         },
         error: (error) => this.toastService.showErrorToast("Failed", error),
@@ -237,7 +234,7 @@ export class GeneralComponent {
         const dt = this.util.toFormData(mediadto)
 
         media = await new Promise((res, rej) => {
-          this.tour.uploadImage(dt).subscribe((response) => {
+          this.tourService.uploadImage(dt).subscribe((response) => {
             res(response)
           })
         })
@@ -263,7 +260,7 @@ export class GeneralComponent {
         languages: this.form.value.languages,
         highlights: this.form.value.highlights,
         departure_details: this.form.value.departure_details,
-        overview: this.form.value.overview,
+
         duration: this.form.value.duration,
         featured_image: media.resourcePath,
         start_date: start_date.toISOString(),
@@ -276,7 +273,7 @@ export class GeneralComponent {
         isActive: this.form.value.isActive,
       }
 
-      this.tour.update(this.tourId, dto).subscribe({
+      this.tourService.update(this.tour.tourId, dto).subscribe({
         next: (response) => {
           this.toastService.showSuccessToast("Success", "Tour Updated")
         },

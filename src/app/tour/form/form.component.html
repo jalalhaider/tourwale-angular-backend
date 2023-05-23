@@ -3,59 +3,35 @@
   <p>Create your amazing Tour</p>
 
   <nav>
-    <div class="nav nav-tabs" id="language-tab" role="tablist">
-      <button class="nav-link active" id="nav-general-tab" data-bs-toggle="tab" data-bs-target="#nav-general" type="button" role="tab" aria-controls="nav-general" aria-selected="true">General</button>
-      <button class="nav-link" id="nav-editors-tab" data-bs-toggle="tab" data-bs-target="#nav-editors" type="button" role="tab" aria-controls="nav-editors" aria-selected="false">Information</button>
-      <button class="nav-link" id="nav-images-tab" data-bs-toggle="tab" data-bs-target="#nav-images" type="button" role="tab" aria-controls="nav-images" aria-selected="false">Images</button>
-      <button class="nav-link" id="nav-itinerary-tab" data-bs-toggle="tab" data-bs-target="#nav-itinerary" type="button" role="tab" aria-controls="nav-itinerary" aria-selected="false">Itinerary</button>
+    <div class="nav nav-tabs" ngbNav #nav="ngbNav" [(activeId)]="activeId">
+      <ng-container [ngbNavItem]="1">
+        <button class="nav-link" (click)="tabclick(1)" [class.active]="activeId == 1" ngbNavLink>General</button>
+        <ng-template ngbNavContent>
+          <app-tour-general></app-tour-general>
+        </ng-template>
+      </ng-container>
+
+      <ng-container [ngbNavItem]="2">
+        <button class="nav-link" (click)="tabclick(2)" [class.active]="activeId == 2" ngbNavLink>Information</button>
+        <ng-template ngbNavContent>
+          <app-tour-information></app-tour-information>
+        </ng-template>
+      </ng-container>
+
+      <ng-container [ngbNavItem]="3">
+        <button class="nav-link" (click)="tabclick(3)" [class.active]="activeId == 3" ngbNavLink>Images</button>
+        <ng-template ngbNavContent>
+          <app-file-upload></app-file-upload>
+        </ng-template>
+      </ng-container>
+
+      <ng-container [ngbNavItem]="4">
+        <button class="nav-link" (click)="tabclick(4)" [class.active]="activeId == 4" ngbNavLink>Itinerary</button>
+        <ng-template ngbNavContent>
+          <app-tour-itinerary></app-tour-itinerary>
+        </ng-template>
+      </ng-container>
     </div>
+    <div [ngbNavOutlet]="nav"></div>
   </nav>
-  <br />
-  <div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
-      <app-tour-general></app-tour-general>
-    </div>
-    <div class="tab-pane fade" id="nav-editors" role="tabpanel" aria-labelledby="nav-editors-tab">
-      <div class="row">
-        <div class="col-sm-12 col-md-12">
-          <div class="mb-3">
-            <label class="form-label"><sup style="color: red">*</sup> Overview </label>
-            <quill-editor [styles]="{ height: '150px' }" (onContentChanged)="onContentChanged($event, 'overview')" [modules]="modules"> </quill-editor>
-          </div>
-          <div class="mb-3">
-            <label class="form-label"><sup style="color: red">*</sup> Requirements </label>
-            <quill-editor [styles]="{ height: '150px' }" (onContentChanged)="onContentChanged($event, 'requirements')" [modules]="modules"> </quill-editor>
-          </div>
-          <div class="mb-3">
-            <label class="form-label"><sup style="color: red">*</sup> Cancellation Policy </label>
-            <quill-editor [styles]="{ height: '150px' }" (onContentChanged)="onContentChanged($event, 'cancellation_policy')" [modules]="modules"> </quill-editor>
-          </div>
-          <div class="mb-3">
-            <label class="form-label"><sup style="color: red">*</sup> What is Included ? </label>
-            <quill-editor [styles]="{ height: '150px' }" (onContentChanged)="onContentChanged($event, 'included')" [modules]="modules"> </quill-editor>
-          </div>
-          <div class="mb-3">
-            <label class="form-label"><sup style="color: red">*</sup> What is Excluded ? </label>
-            <quill-editor [styles]="{ height: '150px' }" (onContentChanged)="onContentChanged($event, 'excluded')" [modules]="modules"> </quill-editor>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label"><sup style="color: red">*</sup> Know Before </label>
-            <quill-editor [styles]="{ height: '150px' }" (onContentChanged)="onContentChanged($event, 'know_before')" [modules]="modules"> </quill-editor>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label"><sup style="color: red">*</sup> Additional Information </label>
-            <quill-editor [styles]="{ height: '150px' }" (onContentChanged)="onContentChanged($event, 'additional_info')" [modules]="modules"> </quill-editor>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="tab-pane fade" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
-      <app-file-upload></app-file-upload>
-    </div>
-    <div class="tab-pane fade" id="nav-itinerary" role="tabpanel" aria-labelledby="nav-itinerary-tab">
-      <app-tour-itinerary></app-tour-itinerary>
-    </div>
-  </div>
 </div>

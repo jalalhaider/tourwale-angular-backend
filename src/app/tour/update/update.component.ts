@@ -4,6 +4,7 @@ import { TourService } from "../tour.service"
 import { ActivatedRoute, Router } from "@angular/router"
 import { Tour } from "../models/tour.models"
 
+let count = 0
 @Component({
   selector: "app-tour",
   templateUrl: "./update.component.html",
@@ -19,17 +20,16 @@ export class UpdateComponent {
 
     private route: ActivatedRoute,
     private router: Router
-  ) {
-    console.log("hello")
-  }
+  ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.tourId = params["_id"]
-
       this.getTour()
+      count++
     })
   }
+
   getTour() {
     this.tourService.get(this.tourId).subscribe((response) => {
       this.data = response

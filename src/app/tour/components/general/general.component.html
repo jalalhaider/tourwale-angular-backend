@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="handleCreate()">
-  <div class="row">
+  <div class="row mt-4">
     <div class="col-sm-12 col-md-3">
       <div class="mb-3">
         <div class="image-container">
@@ -59,12 +59,6 @@
         <label for="name-input" class="form-label"><sup class="required">*</sup> Name </label>
         <input id="name-input" type="text" class="form-control" placeholder="Enter Name" formControlName="name" />
         <span class="required" *ngIf="isValid('name')">Name is required</span>
-      </div>
-
-      <div class="mb-3">
-        <label for="overview-input" class="form-label"><sup class="required">*</sup> Overview </label>
-        <input id="overview-input" type="text" class="form-control" placeholder="Enter Overview" formControlName="overview" />
-        <span class="required" *ngIf="isValid('overview')">Overview is required</span>
       </div>
 
       <div class="mb-3">
@@ -152,6 +146,10 @@
   </div>
 </form>
 
-<button *ngIf="isEdit" class="btn btn-info" (click)="handleUpdate()">Update</button>
+<div class="d-flex justify-content-end">
+  <div class="">
+    <button *ngIf="isEdit" class="btn btn-info" (click)="handleUpdate()">Next &nbsp; <i class="bi bi-arrow-right"></i></button>
 
-<button *ngIf="!isEdit" class="btn btn-info" (click)="handleCreate()">Create</button>
+    <button *ngIf="!isEdit" class="btn btn-info" (click)="handleCreate()">Next &nbsp; <i class="bi bi-arrow-right"></i></button>
+  </div>
+</div>
