@@ -19,7 +19,7 @@ export class GeneralComponent implements OnDestroy {
   isEdit = false
   tour!: Tour
   routeParams = null
-  imageSrc: string = "assets/images/bg/bg1_1_50.jpg"
+  imageSrc: string = "assets/images/bg/bg1.jpg"
   date = new NgbDate(2020, 19, 2)
 
   form = this.fb.group({

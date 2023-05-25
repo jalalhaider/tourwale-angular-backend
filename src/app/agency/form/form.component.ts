@@ -21,8 +21,8 @@ export class FormComponent implements OnInit, OnDestroy {
   @Input() data: Agency = {}
   @Input() isLoading: boolean = false
   @Output() onSubmit = new EventEmitter<Agency>()
-  imageSrc: string = "assets/images/bg/bg1_1_50.jpg"
-  coverImageSrc: string = "assets/images/bg/bg1_1_50.jpg"
+  imageSrc: string = "assets/images/bg/bg1.jpg"
+  coverImageSrc: string = "assets/images/bg/bg1.jpg"
 
   errors: any[] = []
 

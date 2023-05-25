@@ -22,7 +22,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   isEdit = false
   time = { hour: 17, minute: 0 }
   date = { year: 2023, month: 2, day: 2 }
-  imageSrc: string = "assets/images/bg/bg1_1_50.jpg"
+  imageSrc: string = "assets/images/bg/bg1.jpg"
   form = this.fb.group({
     tourId: [0, Validators.required],
     locationId: [0, Validators.required],
@@ -153,7 +153,7 @@ export class ItineraryComponent implements OnInit, OnDestroy {
     this.editorContent = ""
     this.time = { hour: 0, minute: 0 }
     this.date = { year: 2023, month: 1, day: 1 }
-    this.imageSrc = "assets/images/bg/bg1_1_50.jpg"
+    this.imageSrc = "assets/images/bg/bg1.jpg"
   }
   handleEdit(tourId: number, sortOrder: number) {
     this.detailLoading = true
