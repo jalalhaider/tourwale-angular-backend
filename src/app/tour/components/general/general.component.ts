@@ -126,7 +126,8 @@ export class GeneralComponent implements OnDestroy {
       is_draft: response.is_draft,
       isActive: response.isActive,
     })
-    this.imageSrc = `${environment.imageBaseURL}${response.featured_image}`
+    if (response.featured_image)
+      this.imageSrc = `${environment.imageBaseURL}${response.featured_image}`
   }
 
   getCategories() {

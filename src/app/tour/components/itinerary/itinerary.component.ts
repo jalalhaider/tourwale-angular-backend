@@ -107,11 +107,19 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   }
 
   getItinerary() {
+    if (!this.tourId) {
+      return
+    }
     const where = { tourId: this.tourId }
     this.listLoading = true
-    this.itinerary.getList(where).subscribe((response) => {
-      this.list = response
-      this.listLoading = false
+    this.itinerary.getList(where).subscribe({
+      next: (response) => {
+        this.list = response
+        this.listLoading = false
+      },
+      error: (err) => {
+        this.listLoading = false
+      },
     })
   }
   getCategories() {
