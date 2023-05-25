@@ -2,7 +2,7 @@
 FROM node:14.15.3-alpine AS build
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm ci
 COPY . .
 RUN npm run build:prod
 
