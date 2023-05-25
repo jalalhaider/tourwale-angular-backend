@@ -3,8 +3,10 @@ import { Router } from "@angular/router"
 import { ToastService } from "../../shared/services/toast.service"
 import { Agency } from "../models"
 import { AgencyService } from "../agency.service"
+import { environment } from "../../../environments/environment"
 
 @Component({
+  styleUrls: ["./list.component.css"],
   selector: "app-agency-list",
   templateUrl: "./list.component.html",
 })
@@ -22,7 +24,8 @@ export class ListComponent {
   onClick($event: any, row: Agency) {
     this.router.navigateByUrl(`/agency/update?agency_id=${row.agencyId}`)
   }
-  getAgencyName(agency: any) {
-    return agency.description.en?.name || "N/A"
+
+  getImage(image: string) {
+    return `${environment.imageBaseURL}${image}`
   }
 }

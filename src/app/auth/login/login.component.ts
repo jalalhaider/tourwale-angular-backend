@@ -7,7 +7,7 @@ import { ILogin } from "../models"
 
 @Component({
   templateUrl: "./login.component.html",
-  styles: [],
+  styleUrls: [`./login.component.css`],
 })
 export class LoginComponent {
   isLoading = false

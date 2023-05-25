@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from "@angular/core"
+import { Component, Input, OnDestroy, OnInit, Output } from "@angular/core"
 import {
   FormArray,
   FormBuilder,
@@ -7,18 +7,22 @@ import {
   Validators,
 } from "@angular/forms"
 import { EventEmitter } from "@angular/core"
-import { Agency, AgencyDescription } from "../models"
+import { Agency } from "../models"
 import { ToastService } from "../../shared/services/toast.service"
+import { MediaService, UtilService } from "../../shared/services"
+import { environment } from "../../../environments/environment"
 
 @Component({
   selector: "app-agency-form",
   templateUrl: "./form.component.html",
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnDestroy {
   @Input() formType: string = ""
   @Input() data: Agency = {}
   @Input() isLoading: boolean = false
   @Output() onSubmit = new EventEmitter<Agency>()
+  imageSrc: string = "assets/images/bg/bg1_1_50.jpg"
+  coverImageSrc: string = "assets/images/bg/bg1_1_50.jpg"
 
   errors: any[] = []
 
@@ -26,107 +30,110 @@ export class FormComponent implements OnInit {
     slug: ["", Validators.required],
     isActive: [false],
     isBlacklisted: [false],
-    description: this.fb.group({
-      en: this.fb.group({
-        languageId: [1],
-        name: ["", Validators.required],
-        description: ["", Validators.required],
-        image: ["", Validators.required],
-        coverImage: [""],
-      }),
-      ar: this.fb.group({
-        languageId: [2],
-        name: ["", Validators.required],
-        description: ["", Validators.required],
-        image: ["", Validators.required],
-        coverImage: [""],
-      }),
-    }),
-    socialMedia: this.fb.array([
-      /*   this.fb.group({
-        type: ["hello", Validators.required],
-        followers: ["", Validators.required],
-        link: ["", Validators.required],
-      }), */
-    ]),
+    name: ["", Validators.required],
+    description: ["", Validators.required],
+    image: [{}],
+    coverImage: [{}],
   })
 
-  constructor(private fb: FormBuilder, private toastService: ToastService) {}
+  constructor(
+    private fb: FormBuilder,
+    private toastService: ToastService,
+    private util: UtilService,
+    private media: MediaService
+  ) {}
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {}
+
   ngOnChanges() {
     if (!Object.keys(this.data).length) return
 
     this.form.patchValue({
+      name: this.data.name,
+      description: this.data.description,
+      image: this.data.image,
+      coverImage: this.data.coverImage,
       slug: this.data.slug,
       isActive: this.data.isActive,
       isBlacklisted: this.data.isBlacklisted,
-      description: {
-        en: this.data.description?.en,
-        ar: this.data.description?.ar,
-      },
     })
-    this.data.socialMedia?.map((sm) => {
-      this.socialMedia.push(
-        this.fb.group({
-          type: [sm.type, Validators.required],
-          followers: [sm.followers, Validators.required],
-          link: [sm.link, Validators.required],
-        })
-      )
-    })
+    this.imageSrc = `${environment.imageBaseURL}${this.data.image}`
+    this.coverImageSrc = `${environment.imageBaseURL}${this.data.coverImage}`
+  }
+  onFileChange(event: any, formField: string) {
+    const reader = new FileReader()
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files
+      reader.readAsDataURL(file)
+
+      reader.onload = () => {
+        if (formField === "image") {
+          this.imageSrc = reader.result as string
+          this.form.controls.image.setValue(file)
+        }
+        if (formField === "coverImage") {
+          this.coverImageSrc = reader.result as string
+          this.form.controls.coverImage.setValue(file)
+        }
+      }
+    }
   }
 
-  handleSubmit(): void {
+  isValid(field: string): boolean {
+    return (
+      (!this.form.get(field)?.valid && this.form.get(field)?.touched) || false
+    )
+  }
+
+  async handleSubmit() {
     //emit form values after validating
-    console.log("this.form", this.form.value)
+    let media: any = await this.uploadMedia(this.form.value.image)
+
+    let mediaT: any = await this.uploadMedia(this.form.value.coverImage)
+
+    console.log("media", media)
     if (this.form.valid) {
       const dto: any = {
         ...this.form.value,
-        description: [
-          this.form.value.description?.en,
-          this.form.value.description?.ar,
-        ],
+        image: media.resourcePath,
+        coverImage: mediaT.resourcePath,
       }
       this.onSubmit.emit(dto)
     } else {
-      this.getFormValidationErrors()
       this.toastService.showErrorToast("Failed", "Invalid Form")
     }
   }
 
-  getFormValidationErrors() {
-    Object.keys(this.form.controls).forEach((key) => {
-      const controlErrors: ValidationErrors = this.form.get(key)?.errors || []
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach((keyError) => {
-          this.errors.push({
-            field: key,
-            message: keyError,
-          })
-          console.log(controlErrors[keyError])
-        })
+  async uploadMedia(file: any) {
+    let media: any = {}
+    if (file instanceof File) {
+      const mediadto = {
+        sortOrder: 0,
+        mediaType: "image",
+        entityId: 0,
+        entity: "agency",
+        altTag: "Cover Image",
+        isActive: true,
+        resource: file,
       }
-    })
-  }
-
-  addSocialMedia() {
-    this.socialMedia.push(
-      this.fb.group({
-        type: ["", Validators.required],
-        followers: ["", Validators.required],
-        link: ["", Validators.required],
+      const dt = this.util.toFormData(mediadto)
+      console.log("dt", dt)
+      media = await new Promise((res, rej) => {
+        this.media.uploadImage(dt).subscribe({
+          next: (response) => {
+            res(response)
+          },
+          error: (err) => {
+            this.toastService.showErrorToast("Error", err.message)
+          },
+        })
       })
-    )
-  }
-  removeSocialMedia(i: number) {
-    this.socialMedia.removeAt(i)
-  }
-
-  get socialMedia(): FormArray {
-    return this.form.get("socialMedia") as FormArray
-  }
-  agencyDescription(language: string): FormGroup {
-    return this.form.get("description")?.get(language) as FormGroup
+    } else {
+      media.resourcePath = file //this will string if not instance of file
+    }
+    return media
   }
 }

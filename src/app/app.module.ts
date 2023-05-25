@@ -36,6 +36,7 @@ import { UtilService } from "./shared/services/util.service"
 import { AuthGuard } from "./guards/auth.guard"
 import { RequestInterceptor } from "./shared/interceptors"
 import { QuillModule } from "ngx-quill"
+import { MediaService } from "./shared/services"
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -72,6 +73,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   providers: [
     AuthGuard,
     ToastService,
+    MediaService,
     LocalStorageService,
     UtilService,
     {

@@ -1,0 +1,42 @@
+<div class="row" formArrayName="socialMedia">
+  <h4 class="card-title">
+    Social Media
+    <a class="btn btn-info" (click)="addSocialMedia()"> Add Social Media </a>
+  </h4>
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle text-nowrap">
+      <thead>
+        <tr>
+          <th class="text-dark font-medium fs-4">#</th>
+          <th class="text-dark font-medium fs-4">Type</th>
+          <th class="text-dark font-medium fs-4">Followers</th>
+          <th class="text-dark font-medium fs-4">Web Link</th>
+          <th class="text-dark font-medium fs-4">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sm of socialMedia.controls; let i = index" formGroupName="{{ i }}">
+          <td>
+            {{ i + 1 }}
+          </td>
+          <td>
+            <input id="alias-{{ i }}" type="text" class="form-control" placeholder="Enter Type" formControlName="type" />
+            <span style="color: red" *ngIf="!sm.get('type')?.valid && sm.get('type')?.touched">Type is required</span>
+          </td>
+          <td>
+            <input id="alias-{{ i }}" type="text" class="form-control" placeholder="Enter Followers" formControlName="followers" />
+
+            <span style="color: red" *ngIf="!sm.get('followers')?.valid && sm.get('followers')?.touched">Followers is required</span>
+          </td>
+          <td>
+            <input id="alias-{{ i }}" type="text" class="form-control" placeholder="Enter Link" formControlName="link" />
+            <span style="color: red" *ngIf="!sm.get('link')?.valid && sm.get('link')?.touched">Link is required</span>
+          </td>
+          <td>
+            <button class="btn btn-info" (click)="removeSocialMedia(i)">delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

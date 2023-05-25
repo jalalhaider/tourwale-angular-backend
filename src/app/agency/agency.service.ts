@@ -50,8 +50,10 @@ export class AgencyService {
       )
     }
     // Return an observable with a agency-facing error message.
-    return throwError(
-      () => new Error("Something bad happened; please try again later.")
-    )
+    return throwError(() => {
+      const err = new Error("Something bad happened; please try again later.")
+      err.message = error.error.message
+      return err
+    })
   }
 }

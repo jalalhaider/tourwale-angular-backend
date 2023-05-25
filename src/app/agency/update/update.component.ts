@@ -37,12 +37,17 @@ export class UpdateComponent implements OnInit {
 
   onSubmit(dto: Agency) {
     this.isLoading = !this.isLoading
-    this.agencySerivce.update(this.agency_id, dto).subscribe((agency) => {
-      console.log("Agency Updated on Server", agency)
-      this.isLoading = !this.isLoading
+    this.agencySerivce.update(this.agency_id, dto).subscribe({
+      next: (agency) => {
+        this.isLoading = !this.isLoading
 
-      this.toastService.showSuccessToast("Success", "Agency Updated")
-      this.router.navigateByUrl(`/agency/list`)
+        this.toastService.showSuccessToast("Success", "Agency Updated")
+        this.router.navigateByUrl(`/agency/list`)
+      },
+      error: (err) => {
+        console.log("err", err)
+        this.toastService.showErrorToast("Error", err.message)
+      },
     })
   }
 }

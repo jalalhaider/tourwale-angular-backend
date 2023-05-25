@@ -2,3 +2,13 @@
   max-width: 1440px;
   margin: 0 auto;
 }
+
+.navbar-brand {
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-brand > h2 {
+  margin: 0;
+  font-size: 2.2em;
+}
