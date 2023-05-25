@@ -11,7 +11,7 @@ export class LocationService {
 
   get(id: number) {
     return this.http
-      .get("http://localhost:4100/api/v1/location/" + id)
+      .get(`${environment.url}/api/v1/location/` + id)
       .pipe(catchError(this.handleError))
   }
 
@@ -25,21 +25,21 @@ export class LocationService {
   create(dto: Location) {
     const httpOption = {}
     return this.http
-      .post("http://localhost:4100/api/v1/location", dto, httpOption)
+      .post(`${environment.url}/api/v1/location`, dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 
   update(id: number, dto: Location) {
     const httpOption = {}
     return this.http
-      .put("http://localhost:4100/api/v1/location/" + id, dto, httpOption)
+      .put(`${environment.url}/api/v1/location/` + id, dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 
   uploadImage(dto: any) {
     const httpOption = {}
     return this.http
-      .post("http://localhost:4100/api/v1/media/", dto, httpOption)
+      .post(`${environment.url}/api/v1/media/`, dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 

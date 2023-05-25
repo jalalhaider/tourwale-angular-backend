@@ -24,7 +24,7 @@ export class TourService {
 
   get(id: number) {
     return this.http
-      .get("http://localhost:4100/api/v1/tour/" + id)
+      .get(`${environment.url}/api/v1/tour/` + id)
       .pipe(tap((x) => (this._state = x)))
       .pipe(catchError(this.handleError))
   }
@@ -39,14 +39,14 @@ export class TourService {
   create(dto: Tour) {
     const httpOption = {}
     return this.http
-      .post("http://localhost:4100/api/v1/tour", dto, httpOption)
+      .post(`${environment.url}/api/v1/tour`, dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 
   update(id: number, dto: Tour) {
     const httpOption = {}
     return this.http
-      .put("http://localhost:4100/api/v1/tour/" + id, dto, httpOption)
+      .put(`${environment.url}/api/v1/tour` + id, dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 

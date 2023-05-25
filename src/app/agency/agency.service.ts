@@ -12,7 +12,7 @@ export class AgencyService {
 
   get(id: number): Observable<Agency> {
     return this.http
-      .get("http://localhost:4100/api/v1/agency/" + id)
+      .get(`${environment.url}/api/v1/agency/` + id)
       .pipe(catchError(this.handleError))
   }
 
@@ -26,14 +26,14 @@ export class AgencyService {
   create(dto: Agency) {
     const httpOption = {}
     return this.http
-      .post("http://localhost:4100/api/v1/agency", dto, httpOption)
+      .post(`${environment.url}/api/v1/agency`, dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 
   update(id: number, dto: Agency) {
     const httpOption = {}
     return this.http
-      .put("http://localhost:4100/api/v1/agency/" + id, dto, httpOption)
+      .put(`${environment.url}/api/v1/agency/` + id, dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 

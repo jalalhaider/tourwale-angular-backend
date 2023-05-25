@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http"
 import { Component } from "@angular/core"
 import { UtilService } from "../../shared/services/util.service"
+import { environment } from "../../../environments/environment"
 
 const example = [
   {
@@ -77,7 +78,7 @@ export class FileUploadComponent {
         }
         const dto = this.util.toFormData(form)
         this.http
-          .post("http://localhost:4100/api/v1/media", dto, httpOption)
+          .post(`${environment.url}/api/v1/media`, dto, httpOption)
           .subscribe({
             next: (res: any) => {
               this.files.push(res)
@@ -93,7 +94,7 @@ export class FileUploadComponent {
   onDelete(file: any) {
     console.log(file)
     this.http
-      .delete("http://localhost:4100/api/v1/media/" + file.mediaId)
+      .delete(`${environment.url}/api/v1/media/` + file.mediaId)
       .subscribe({
         next: (res: any) => {
           this.files = this.files.filter((f) => f.mediaId != file.mediaId)

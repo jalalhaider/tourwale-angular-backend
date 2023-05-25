@@ -11,7 +11,7 @@ export class CategoryService {
 
   get(id: number) {
     return this.http
-      .get("http://localhost:4100/api/v1/category/" + id)
+      .get(`${environment.url}/api/v1/category/` + id)
       .pipe(catchError(this.handleError))
   }
 
@@ -25,21 +25,21 @@ export class CategoryService {
   create(dto: Category) {
     const httpOption = {}
     return this.http
-      .post("http://localhost:4100/api/v1/category", dto, httpOption)
+      .post(`${environment.url}/api/v1/category`, dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 
   update(id: number, dto: Category) {
     const httpOption = {}
     return this.http
-      .put("http://localhost:4100/api/v1/category/" + id, dto, httpOption)
+      .put(`${environment.url}/api/v1/category/` + id, dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 
   uploadImage(dto: any) {
     const httpOption = {}
     return this.http
-      .post("http://localhost:4100/api/v1/media/", dto, httpOption)
+      .post(`${environment.url}/api/v1/media/`, dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 

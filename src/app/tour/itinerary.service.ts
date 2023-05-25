@@ -23,7 +23,7 @@ export class ItineraryService {
   create(dto: Iitinerary) {
     const httpOption = {}
     return this.http
-      .post("http://localhost:4100/api/v1/tour-itinerary", dto, httpOption)
+      .post(`${environment.url}/api/v1/tour-itinerary`, dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 
