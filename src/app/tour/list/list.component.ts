@@ -16,7 +16,7 @@ export class ListComponent {
   ngOnInit() {
     const query = {}
     this.tour.getList(query).subscribe((response) => {
-      this.list = response
+      this.list = response.list
     })
   }
   handleEdit(event: any, tour: Tour) {
