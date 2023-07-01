@@ -45,6 +45,12 @@ export const Approutes: Routes = [
         loadChildren: () =>
           import("./tour/tour.module").then((m) => m.TourModule),
       },
+
+      {
+        path: "location",
+        loadChildren: () =>
+          import("./location/location.module").then((m) => m.LocationModule),
+      },
       {
         path: "agency",
         loadChildren: () =>

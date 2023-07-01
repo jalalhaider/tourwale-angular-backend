@@ -6,7 +6,12 @@ import { CommonModule } from "@angular/common"
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap"
 import { LocationService } from "./location.service"
 import { QuillModule } from "ngx-quill"
-const routes: any[] = []
+import { routes } from "./location.routing"
+import { CreateComponent } from "./create/create.component"
+import { UpdateComponent } from "./update/update.component"
+import { ListComponent } from "./list/list.component"
+import { FormComponent } from "./form/form.component"
+
 @NgModule({
   imports: [
     QuillModule.forRoot(),
@@ -17,7 +22,12 @@ const routes: any[] = []
     ComponentsModule,
     NgbModule,
   ],
-  declarations: [],
+  declarations: [
+    CreateComponent,
+    ListComponent,
+    FormComponent,
+    UpdateComponent,
+  ],
   providers: [LocationService],
 })
 export class LocationModule {}

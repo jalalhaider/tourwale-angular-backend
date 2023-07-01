@@ -5,7 +5,11 @@ import {
   LocationStrategy,
   PathLocationStrategy,
 } from "@angular/common"
-import { NgModule } from "@angular/core"
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  NO_ERRORS_SCHEMA,
+  NgModule,
+} from "@angular/core"
 import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import {
   HttpClientModule,
@@ -46,6 +50,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 }
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   declarations: [
     AppComponent,
     SpinnerComponent,

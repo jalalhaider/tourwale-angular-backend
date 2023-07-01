@@ -12,6 +12,10 @@ export class Tour {
   departure_details!: string
   know_before!: string
   additional_info!: string
+  noOfPersons!: number
+  attractions!: string
+  destinationLocationId!: number
+
   duration!: string
   start_date!: string //2023-05-07T09:18:15.871Z;
   end_date!: string

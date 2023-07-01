@@ -10,13 +10,21 @@ import { environment } from "../../../environments/environment"
   templateUrl: `./list.component.html`,
 })
 export class ListComponent {
+  isLoading = true
   constructor(private tour: TourService, private router: Router) {}
 
   list: Tour[] = []
   ngOnInit() {
     const query = {}
-    this.tour.getList(query).subscribe((response) => {
-      this.list = response.list
+    this.tour.getList(query).subscribe({
+      next: (response) => {
+        this.list = response.list
+
+        this.isLoading = false
+      },
+      error: () => {
+        this.isLoading = false
+      },
     })
   }
   handleEdit(event: any, tour: Tour) {

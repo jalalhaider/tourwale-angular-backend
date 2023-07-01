@@ -46,7 +46,7 @@ export class TourService {
   update(id: number, dto: Tour) {
     const httpOption = {}
     return this.http
-      .put(`${environment.url}/api/v1/tour` + id, dto, httpOption)
+      .put(`${environment.url}/api/v1/tour/` + id, dto, httpOption)
       .pipe(catchError(this.handleError))
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core"
+import { Component, Input, OnDestroy, OnInit } from "@angular/core"
 import { FormBuilder, Validators } from "@angular/forms"
 import { ToastService, UtilService } from "../../../shared/services"
 import { TourService } from "../../tour.service"
@@ -15,7 +15,7 @@ import { environment } from "../../../../environments/environment"
 })
 export class ItineraryComponent implements OnInit, OnDestroy {
   tourId = 1
-  tour!: Tour
+  @Input() data!: Tour
   listLoading = false
   detailLoading = false
   editorContent = ""
@@ -73,13 +73,6 @@ export class ItineraryComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   ngOnInit(): void {
-    this.tour = this.tourService.state
-    if (this.tour) {
-      this.tourId = this.tour.tourId
-    }
-
-    this.form.controls.tourId.setValue(this.tourId)
-    this.getItinerary()
     this.getCategories()
     this.getLocations()
   }
@@ -88,6 +81,17 @@ export class ItineraryComponent implements OnInit, OnDestroy {
       (!this.form.get(field)?.valid && this.form.get(field)?.touched) || false
     )
   }
+
+  ngOnChanges() {
+    if (!this.data) return
+
+    this.tourId = this.data.tourId
+    this.form.controls.tourId.setValue(this.tourId)
+
+    this.isEdit = true
+    this.getItinerary()
+  }
+
   onContentChanged(data: any, field: string) {
     this.form.patchValue({ [field]: data.html })
   }

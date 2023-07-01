@@ -13,7 +13,7 @@ import { Tour } from "../../models"
   templateUrl: "./information.component.html",
 })
 export class InformationComponent implements OnInit, OnDestroy {
-  @Input() tour!: Tour
+  @Input() data!: Tour
   isEdit: boolean = false
   modules = {
     toolbar: [
@@ -58,12 +58,12 @@ export class InformationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-  ngOnInit() {
-    this.tour = this.tourService.state
-    if (this.tour) {
-      this.isEdit = true
-      this.updateFormValues(this.tour)
-    }
+  ngOnInit() {}
+  ngOnChanges() {
+    if (!this.data) return
+
+    this.isEdit = true
+    this.updateFormValues(this.data)
   }
 
   updateFormValues(response: Tour) {
@@ -85,8 +85,8 @@ export class InformationComponent implements OnInit, OnDestroy {
 
     if (this.form.valid) {
       const dto: any = {
-        ...this.tour,
-        basePrice: Number(this.tour.basePrice),
+        ...this.data,
+        basePrice: Number(this.data.basePrice),
         overview: this.form.value.overview,
         cancellation_policy: this.form.value.cancellation_policy,
         included: this.form.value.included,
@@ -96,7 +96,7 @@ export class InformationComponent implements OnInit, OnDestroy {
         requirements: this.form.value.requirements,
       }
 
-      this.tourService.update(this.tour.tourId, dto).subscribe({
+      this.tourService.update(this.data.tourId, dto).subscribe({
         next: (response) => {
           console.log("information", response)
           this.toastService.showSuccessToast("Success", "Tour Created")

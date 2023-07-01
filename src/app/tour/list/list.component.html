@@ -8,6 +8,8 @@
         <a routerLink="/tour/create" class="btn btn-info"><i class="bi bi-people"></i> Add Tour</a>
 
         <div class="table-responsive">
+          <br />
+          <app-loading-bar *ngIf="isLoading"></app-loading-bar>
           <table class="table align-middle text-nowrap">
             <thead>
               <tr>

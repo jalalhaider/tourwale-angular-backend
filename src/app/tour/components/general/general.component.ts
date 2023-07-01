@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core"
+import { Component, Input, OnDestroy } from "@angular/core"
 import { TourService } from "../../tour.service"
 import { ToastService, UtilService } from "../../../shared/services"
 import { FormBuilder, Validators } from "@angular/forms"
@@ -17,6 +17,7 @@ import { Tour } from "../../models"
 })
 export class GeneralComponent implements OnDestroy {
   isEdit = false
+  @Input() data!: Tour
   tour!: Tour
   routeParams = null
   imageSrc: string = "assets/images/bg/bg1.jpg"
@@ -32,6 +33,9 @@ export class GeneralComponent implements OnDestroy {
     highlights: ["", Validators.required],
     departure_details: ["", Validators.required],
 
+    destinationLocationId: [0, Validators.required],
+    attractions: [""],
+    noOfPersons: [0, Validators.required],
     duration: ["", Validators.required],
     featured_image: [{}, Validators.required],
     start_date: [new NgbDate(2023, 0, 1), Validators.required],
@@ -65,14 +69,14 @@ export class GeneralComponent implements OnDestroy {
     this.getAgencies()
     this.getCategories()
     this.getLocations()
-
-    this.tour = this.tourService.state
-    if (this.tour) {
-      this.isEdit = true
-      this.updateFormValues(this.tour)
-    }
   }
 
+  ngOnChanges() {
+    if (!this.data) return
+
+    this.isEdit = true
+    this.updateFormValues(this.data)
+  }
   onFileChange(event: any) {
     const reader = new FileReader()
 
@@ -107,6 +111,9 @@ export class GeneralComponent implements OnDestroy {
       highlights: response.highlights,
       departure_details: response.departure_details,
 
+      noOfPersons: response.noOfPersons,
+      attractions: response.attractions,
+      destinationLocationId: response.destinationLocationId,
       duration: response.duration,
       featured_image: response.featured_image,
       start_date: new NgbDate(
@@ -191,7 +198,11 @@ export class GeneralComponent implements OnDestroy {
         highlights: this.form.value.highlights,
         departure_details: this.form.value.departure_details,
 
+        noOfPersons: Number(this.form.value.noOfPersons),
+        attractions: this.form.value.attractions,
+        destinationLocationId: Number(this.form.value.destinationLocationId),
         duration: this.form.value.duration,
+
         featured_image: media.featured_image,
         start_date: start_date.toISOString(),
         end_date: end_date.toISOString(),
@@ -218,7 +229,6 @@ export class GeneralComponent implements OnDestroy {
   async handleUpdate() {
     //emit form values after validating
 
-    console.log(this.form.value)
     if (this.form.valid) {
       // upload feature image
       let media: any = {}
@@ -262,6 +272,9 @@ export class GeneralComponent implements OnDestroy {
         highlights: this.form.value.highlights,
         departure_details: this.form.value.departure_details,
 
+        noOfPersons: Number(this.form.value.noOfPersons),
+        attractions: this.form.value.attractions,
+        destinationLocationId: Number(this.form.value.destinationLocationId),
         duration: this.form.value.duration,
         featured_image: media.resourcePath,
         start_date: start_date.toISOString(),
@@ -274,7 +287,7 @@ export class GeneralComponent implements OnDestroy {
         isActive: this.form.value.isActive,
       }
 
-      this.tourService.update(this.tour.tourId, dto).subscribe({
+      this.tourService.update(this.data.tourId, dto).subscribe({
         next: (response) => {
           this.toastService.showSuccessToast("Success", "Tour Updated")
         },

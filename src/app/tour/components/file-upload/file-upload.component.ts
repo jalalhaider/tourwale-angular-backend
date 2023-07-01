@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http"
-import { Component, OnDestroy, OnInit } from "@angular/core"
+import { Component, Input, OnDestroy, OnInit } from "@angular/core"
 import { UtilService } from "../../../shared/services/util.service"
 import { TourService } from "../../tour.service"
 import { ToastService } from "../../../shared/services"
@@ -93,26 +93,29 @@ const example = [
 })
 export class FileUploadComponent implements OnInit, OnDestroy {
   files: any = []
-  tour!: Tour
+  @Input() data!: Tour
   isEdit = false
   sortOrder = 1
+
   constructor(
     private tourService: TourService,
     private toastService: ToastService,
     private util: UtilService
   ) {}
+
   ngOnDestroy(): void {}
-  ngOnInit(): void {
-    this.tour = this.tourService.state
-    if (this.tour) {
-      this.isEdit = true
-      this.getImages()
-    }
+
+  ngOnInit(): void {}
+  ngOnChanges() {
+    if (!this.data) return
+
+    this.isEdit = true
+    this.getImages()
   }
 
   getImages() {
     this.tourService
-      .getMedia(this.tour.tourId, "tour")
+      .getMedia(this.data.tourId, "tour")
       .subscribe((response: any) => {
         this.files = response
         this.sortOrder = response.length
@@ -120,8 +123,6 @@ export class FileUploadComponent implements OnInit, OnDestroy {
   }
 
   handleFiles(files: any): void {
-    console.log("Jalal", files)
-
     if (files) {
       for (let i = 0; i < files.length; i++) {
         const file = files[i]
@@ -131,7 +132,7 @@ export class FileUploadComponent implements OnInit, OnDestroy {
         const form = {
           sortOrder: this.sortOrder + i,
           mediaType: "image",
-          entityId: this.tour.tourId,
+          entityId: this.data.tourId,
           entity: "tour",
           altTag: `tour-image-${this.sortOrder}`,
           isActive: true,

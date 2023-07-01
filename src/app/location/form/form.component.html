@@ -1,0 +1,69 @@
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
+  <div class="card-body">
+    <h2 class="">Category</h2>
+    <p>System Category form</p>
+
+    <ngb-alert *ngIf="errors.length > 0" [type]="'danger'" [dismissible]="true" class="customize-alert fs-5">
+      <div *ngFor="let error of errors">{{ error.field }} : {{ error.message }}</div>
+    </ngb-alert>
+    <div class="row">
+      <div class="col-12"></div>
+
+      <div class="col-sm-12 col-md-6">
+        <div class="mb-3">
+          <label for="tame-input" class="form-label"><sup class="required">*</sup> Name </label>
+          <input id="tame-input" type="text" class="form-control" placeholder="Enter Name" formControlName="name" />
+          <span class="required" *ngIf="isValid('name')">Name is required</span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label"><sup class="required">*</sup> Description</label>
+          <quill-editor [styles]="{ height: '150px' }" formControlName="description" [modules]="modules"> </quill-editor>
+        </div>
+        <div class="mb-3">
+          <label for="Type-input" class="form-label"><sup class="required">*</sup> Type </label>
+          <input id="Type-input" type="text" class="form-control" placeholder="Enter Type" formControlName="type" />
+          <span class="required" *ngIf="isValid('type')">Type is required</span>
+        </div>
+        <div class="mb-3">
+          <label for="timezone-input" class="form-label">Time Zone </label>
+          <input id="timezone-input" type="text" class="form-control" placeholder="Enter Title" formControlName="timeZone" />
+        </div>
+        <div class="mb-3">
+          <label for="best-input" class="form-label"> Best Time To Visit</label>
+          <input id="best-input" type="text" class="form-control" placeholder="Enter Title" formControlName="bestTimeToVisit" />
+        </div>
+        <div class="mb-3">
+          <label for="currency-input" class="form-label"> Currency</label>
+          <input id="currency-input" type="text" class="form-control" placeholder="Enter Currency" formControlName="currency" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label"><sup class="required">*</sup> Know Before</label>
+          <quill-editor [styles]="{ height: '150px' }" formControlName="knowBefore" [modules]="modules"> </quill-editor>
+        </div>
+
+        <div class="mb-3">
+          <label for="popular-input" class="form-label">Is Popular </label>
+          <div class="form-check form-switch">
+            <input id="popular-input" class="form-check-input cursor-pointer" type="checkbox" formControlName="isPopular" />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="active-input" class="form-label">Is Active </label>
+          <div class="form-check form-switch">
+            <input id="active-input" class="form-check-input cursor-pointer" type="checkbox" formControlName="isActive" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 align-self-end">
+        <button class="btn btn-info" type="submit">
+          <i class="bi bi-save"></i>
+          <span> Save</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

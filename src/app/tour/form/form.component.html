@@ -7,28 +7,28 @@
       <ng-container [ngbNavItem]="1">
         <button class="nav-link" (click)="tabclick(1)" [class.active]="activeId == 1" ngbNavLink>General</button>
         <ng-template ngbNavContent>
-          <app-tour-general></app-tour-general>
+          <app-tour-general [data]="data"></app-tour-general>
         </ng-template>
       </ng-container>
 
       <ng-container [ngbNavItem]="2">
         <button class="nav-link" (click)="tabclick(2)" [class.active]="activeId == 2" ngbNavLink>Information</button>
         <ng-template ngbNavContent>
-          <app-tour-information></app-tour-information>
+          <app-tour-information [data]="data"></app-tour-information>
         </ng-template>
       </ng-container>
 
       <ng-container [ngbNavItem]="3">
         <button class="nav-link" (click)="tabclick(3)" [class.active]="activeId == 3" ngbNavLink>Images</button>
         <ng-template ngbNavContent>
-          <app-file-upload></app-file-upload>
+          <app-file-upload [data]="data"></app-file-upload>
         </ng-template>
       </ng-container>
 
       <ng-container [ngbNavItem]="4">
         <button class="nav-link" (click)="tabclick(4)" [class.active]="activeId == 4" ngbNavLink>Itinerary</button>
         <ng-template ngbNavContent>
-          <app-tour-itinerary></app-tour-itinerary>
+          <app-tour-itinerary [data]="data"></app-tour-itinerary>
         </ng-template>
       </ng-container>
     </div>

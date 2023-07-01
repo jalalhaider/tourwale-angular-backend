@@ -103,6 +103,28 @@
     </div>
     <div class="col-sm-12 col-md-3">
       <div class="mb-3">
+        <label class="form-label"><sup class="required">*</sup> No. Of Persons </label>
+        <input type="text" class="form-control" placeholder="Enter No. Of Persons" formControlName="noOfPersons" />
+        <span class="required" *ngIf="isValid('noOfPersons')">No. Of Persons is required</span>
+      </div>
+
+      <div class="mb-3">
+        <label for="attractions-input" class="form-label">Attractions </label>
+        <input id="attractions-input" type="text" class="form-control" placeholder="Enter attractions" formControlName="attractions" />
+        <span class="required" *ngIf="isValid('attractions')">Attractions is required</span>
+      </div>
+
+      <div class="mb-3">
+        <label for="name-input" class="form-label"><sup class="required">*</sup> Destination </label>
+
+        <select class="form-select" aria-label="locations" formControlName="destinationLocationId">
+          <option value="0" selected>Select Destination Location</option>
+          <option [value]="c.locationId" *ngFor="let c of locations">{{ c.name }}</option>
+        </select>
+        <span class="required" *ngIf="isValid('destinationLocationId')">Please Select Destination Location</span>
+      </div>
+
+      <div class="mb-3">
         <label class="form-label"><sup class="required">*</sup> Agency </label>
 
         <select class="form-select" aria-label="Category" formControlName="agencyId">

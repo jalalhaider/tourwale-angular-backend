@@ -11,7 +11,7 @@ let count = 0
 })
 export class UpdateComponent {
   formType = "Update"
-  isLoading = false
+  isLoading = true
   tourId = 0
   data: any
   constructor(
@@ -31,8 +31,15 @@ export class UpdateComponent {
   }
 
   getTour() {
-    this.tourService.get(this.tourId).subscribe((response) => {
-      this.data = response
+    this.tourService.get(this.tourId).subscribe({
+      next: (response) => {
+        this.data = response
+
+        this.isLoading = false
+      },
+      error: () => {
+        this.isLoading = false
+      },
     })
   }
   onSubmit(dto: Tour) {

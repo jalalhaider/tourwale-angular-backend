@@ -26,6 +26,14 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
+    path: "/location/list",
+    title: "Locations",
+    icon: "bi bi-map",
+    class: "",
+    extralink: false,
+    submenu: [],
+  },
+  {
     path: "/agency/list",
     title: "Agency",
     icon: "bi bi-building-lock",
